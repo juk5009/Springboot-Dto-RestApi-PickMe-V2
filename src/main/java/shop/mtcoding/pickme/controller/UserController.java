@@ -147,7 +147,7 @@ public class UserController {
             } // for x end
         } // for i end
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userSkillMatch), HttpStatus.OK);
+        return new ResponseEntity<>(userSkillMatch, HttpStatus.OK);
     }
 
     @GetMapping("/")
