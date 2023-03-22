@@ -54,8 +54,4 @@ public class Notice {
         this.noticeContent = noticeupdateReqDto.getNoticeContent();
     }
 
-    public Notice() {
-
-    }
-
 }
