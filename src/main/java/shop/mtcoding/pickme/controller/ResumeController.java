@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -21,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.Company;
@@ -174,34 +175,34 @@ public class ResumeController {
     }
 
     @GetMapping("/resume/{id}")
-    public String resumeDetailForm(@PathVariable int id, Model model) {
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        if (userPrincipal == null && comprincipal == null) {
-            throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-        resumeRepository.findById(id);
+    public ResponseEntity<?> resumeDetailForm(@PathVariable int id) {
+        // User userPrincipal = (User) session.getAttribute("userPrincipal");
+        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
+        // if (userPrincipal == null && comprincipal == null) {
+        //     throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
+
+        // resumeRepository.findById(id);
+        
+
         ResumeSaveReqDto resumeDto = resumeRepository.findByUserIdWithResume(id);
-        model.addAttribute("resumeDto", resumeDto);
 
         List<Userskill> userskill = userskillRepository.findByResumeId(id);
 
-        model.addAttribute("userskillDto", userskill);
-        return "resume/resumeDetailForm";
+        ResumeDetailRespDto resumeDetailRespDto = new ResumeDetailRespDto();
+        resumeDetailRespDto.setResumeSaveReqDto(resumeDto);
+        resumeDetailRespDto.setUserSkills(userskill);
+
+
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeDetailRespDto), HttpStatus.OK);
     }
 
     @GetMapping("/resume/{id}/updateResumeForm")
-    public String noticeUpdateForm(@PathVariable int id, Model model) {
+    public ResponseEntity<?> resumeUpdateForm(@PathVariable int id) {
 
-        Resume ResumePS = resumeRepository.findById(id);
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-
-        model.addAttribute("resume", ResumePS);
-
-        return "resume/updateResumeForm";
+        ResumeUpdateRespDto resumeUpdateRespDto = resumeRepository.findById(id);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeUpdateRespDto), HttpStatus.OK);
     }
 
 }
