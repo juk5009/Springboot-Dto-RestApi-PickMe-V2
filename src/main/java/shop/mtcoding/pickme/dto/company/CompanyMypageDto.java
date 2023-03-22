@@ -4,7 +4,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSelectRespDto;
+import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
 import shop.mtcoding.pickme.model.Company;
 
 @Setter
