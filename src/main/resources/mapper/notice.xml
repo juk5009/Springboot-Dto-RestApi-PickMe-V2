@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.mtcoding.pickme.model.NoticeRepository">
+    <select id="findMainList" resultType="shop.mtcoding.pickme.dto.notice.NoticeResp$NoticeMainRespDto">
+        SELECT nt.id, nt.notice_companyname, nt.notice_title, ct.company_profile
+        FROM notice_tb nt
+        JOIN company_tb ct
+        ON nt.company_id = ct.id;
+    </select>
+
+    <select id="findAllWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeResp$ResumeSelectRespDto">
+        SELECT  ut.user_profile, rt.resume_username, rt.id , rt.user_id
+        FROM user_tb ut
+        INNER JOIN resume_tb rt ON ut.id = rt.user_id;
+    </select>
+
+    <select id="findAllWithNotice" resultType="shop.mtcoding.pickme.dto.notice.NoticeResp$NoticeSelectRespDto">
+        SELECT  ct.company_profile, nt.notice_title, nt.id , nt.company_id
+        FROM company_tb ct
+        INNER JOIN notice_tb nt ON ct.id = nt.company_id;
+    </select>   
+
+    <select id="findByCompanyIdWithNotice" resultType="shop.mtcoding.pickme.dto.notice.NoticeReq$NoticeSaveReqDto">
+        select nt.id, nt.notice_companyname, nt.notice_title, nt.notice_career, nt.notice_pay, nt.notice_employtype, nt.notice_grade, nt.notice_location, nt.notice_content ,nt.company_id
+        from company_tb tr 
+        inner join notice_tb nt
+        on tr.id = nt.company_id
+        where nt.id = #{id}
+    </select>
+
+    <select id="findAll" resultType="shop.mtcoding.pickme.model.Notice">
+        select * from notice_tb
+    </select>
+
+    <select id="findById" resultType="shop.mtcoding.pickme.model.Notice">
+        select * from notice_tb where id = #{id}
+    </select>   
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into notice_tb (company_id, notice_companyname, notice_title, notice_employtype, notice_location, notice_career, notice_grade, notice_pay, notice_content, created_at) values(#{companyId}, #{noticeCompanyname}, #{noticeTitle}, #{noticeEmploytype}, #{noticeLocation}, #{noticeCareer}, #{noticeGrade}, #{noticePay},  #{noticeContent}, now())
+    </insert>
+
+    <delete id="deleteById" >
+        delete from notice_tb where id = #{id} 
+    </delete>
+
+    <update id="updateById" >
+        update notice_tb set notice_companyname= #{noticeCompanyname}, notice_title= #{noticeTitle}, notice_employtype= #{noticeEmploytype}, notice_location= #{noticeLocation}, notice_career= #{noticeCareer}, notice_grade= #{noticeGrade}, notice_pay= #{noticePay}, notice_content= #{noticeContent} where id = #{id} 
+    </update>
+   
+</mapper>

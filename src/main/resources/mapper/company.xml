@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.mtcoding.pickme.model.CompanyRepository">
+
+    <select id="findCompanyList" resultType="shop.mtcoding.pickme.dto.company.CompanyResp$CompanyListRespDto">  
+        SELECT nt.id, nt.notice_companyname
+        FROM notice_tb nt
+        JOIN company_tb ct
+        ON nt.company_id = ct.id
+    </select>
+
+    <select id="findAll" resultType="shop.mtcoding.pickme.model.Company">
+        select * from company_tb
+    </select>
+
+    <select id="findByCompanyname" resultType="shop.mtcoding.pickme.model.Company">
+        select * from company_tb where company_name = #{companyName}
+    </select>
+
+    <select id="findById" resultType="shop.mtcoding.pickme.model.Company">
+        select * from company_tb where id = #{id}
+    </select>   
+
+    <insert id="insert">
+        insert into company_tb (company_name, company_password, company_email, created_at) values(#{companyName}, #{companyPassword}, #{companyEmail}, now())
+    </insert>
+
+    <delete id="deleteById" >
+        delete from company_tb where id = #{id} 
+    </delete>
+
+    <update id="updateById" >
+        update company_tb set company_name= #{companyName}, company_password= #{companyPassword}, company_email= #{companyEmail} where id = #{id} 
+    </update>
+
+    <select id="findByCompanynameAndPassword" resultType="shop.mtcoding.pickme.model.Company">
+        select * from company_tb where company_name = #{companyName} and company_password = #{companyPassword}
+    </select> 
+
+    <update id="updateCompanyProfile">
+          update company_tb set company_name= #{companyName}, company_password= #{companyPassword}, company_email= #{companyEmail} ,company_profile = #{companyProfile} where id = #{id} 
+    </update>
+</mapper>

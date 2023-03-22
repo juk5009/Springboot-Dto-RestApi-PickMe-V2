@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.mtcoding.pickme.model.ResumeRepository">
+
+    <select id="findByUserIdWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeReq$ResumeSaveReqDto">
+        select re.id, re.resume_username , re.resume_birth, re.resume_email,  re.resume_address,  re.resume_location, re.resume_career, re.resume_grade, re.resume_phone_number,  re.resume_sex,  re.resume_content
+        from user_tb ur 
+        inner join resume_tb re
+        on ur.id = re.user_id
+        where re.id = #{id}
+    </select>    
+
+    <select id="findAll" resultType="shop.mtcoding.pickme.model.Resume">
+        select * from resume_tb
+    </select>
+
+    <select id="findById" resultType="shop.mtcoding.pickme.model.Resume">
+        select * from resume_tb where id = #{id}
+    </select>   
+
+     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO resume_tb(user_id, resume_username , resume_birth, resume_email, resume_address, resume_location, resume_career, resume_grade, resume_phone_number, resume_sex, resume_content, created_at) values(#{userId}, #{resumeUsername}, #{resumeBirth},  #{resumeEmail}, #{resumeAddress}, #{resumeLocation}, #{resumeCareer}, #{resumeGrade}, #{resumePhoneNumber}, #{resumeSex}, #{resumeContent}, now())
+    </insert>    
+
+    <delete id="deleteById" >
+        delete from resume_tb where id = #{id} 
+    </delete>
+   
+    <update id="updateById" >
+        update resume_tb set resume_username= #{resumeUsername}, resume_birth= #{resumeBirth}, resume_email= #{resumeEmail}, resume_address= #{resumeAddress}, resume_location= #{resumeLocation}, resume_career= #{resumeCareer}, resume_grade= #{resumeGrade}, resume_phone_number= #{resumePhoneNumber}, resume_sex= #{resumeSex}, resume_content= #{resumeContent} where id = #{id} 
+    </update>    
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.mtcoding.pickme.model.ApplyRepository">
+
+    <select id="findAll" resultType="shop.mtcoding.pickme.model.Apply">
+        select * from apply_tb
+    </select>
+
+    <select id="findById" resultType="shop.mtcoding.pickme.model.Apply">
+        select * from apply_tb where id = #{id}
+    </select>   
+
+    <insert id="insert">
+        insert into apply_tb (resume_id, notice_id, user_id, company_id, created_at) values(#{resumeId}, #{noticeId}, #{userId}, #{companyId}, now())
+    </insert>
+    
+    <delete id="deleteById" >
+        delete from apply_tb where id = #{id} 
+    </delete>
+
+    <update id="updateById" >
+        
+    </update>
+
+    <select id="findApplyList" resultType="shop.mtcoding.pickme.dto.apply.ApplyResp$ApplyListRespDto">
+        SELECT DISTINCT at.id, at.company_id, rt.resume_username, rt.resume_career, rt.resume_grade, rt.user_id, at.resume_id, at.notice_id
+        FROM apply_tb at
+        INNER JOIN resume_tb rt ON at.resume_id = rt.id;
+    </select>
+
+    
+
+    
+
+</mapper>
