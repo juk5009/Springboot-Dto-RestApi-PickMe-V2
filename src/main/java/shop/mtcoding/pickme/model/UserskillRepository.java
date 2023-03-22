@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2.UserskillDto;
 import shop.mtcoding.pickme.dto.userskill.UserskillReqDto.UserskillSaveReqDto;
 
 @Mapper
@@ -15,7 +16,9 @@ public interface UserskillRepository {
 
         public List<Userskill> findByUserId(int id);
 
-        public List<Userskill> findByResumeId(int id);
+        public List<UserskillDto> findByResumeId(int id);
+
+        // public List<Userskill> findByResumeId(int id);
 
         public List<Notice> findByCompanyskillName(@Param("userId") int userId, @Param("resumeId") int resumeId);
 
@@ -27,4 +30,6 @@ public interface UserskillRepository {
         public int deleteById(int id);
 
         public int deleteByResumeId(int resumeId);
+
+
 }

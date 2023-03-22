@@ -5,13 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 
 @Mapper
 public interface ResumeRepository {
 
-        public ResumeSaveReqDto findByUserIdWithResume(int id);
+        public ResumeRespDto findByUserIdWithResume(int id);
 
         public List<Resume> findAll();
 
@@ -31,4 +33,6 @@ public interface ResumeRepository {
                         @Param("resumeSex") String resumeSex, @Param("resumeContent") String resumeContent);
 
         public int deleteById(int id);
+
+        public ResumeDetailRespDtoV2 resumeJoinUserskill(int id);
 }
