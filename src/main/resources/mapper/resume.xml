@@ -5,13 +5,42 @@
 
 <mapper namespace="shop.mtcoding.pickme.model.ResumeRepository">
 
-    <select id="findByUserIdWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeReq$ResumeSaveReqDto">
+    <select id="findByUserIdWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeRespDto">
         select re.id, re.user_id, re.resume_username , re.resume_birth, re.resume_email,  re.resume_address,  re.resume_location, re.resume_career, re.resume_grade, re.resume_phone_number,  re.resume_sex,  re.resume_content
         from user_tb ur 
         inner join resume_tb re
         on ur.id = re.user_id
         where re.id = #{id}
     </select>    
+<!-- 
+    <resultMap id="ResumeDetailRespDtoV2" type="shop.mtcoding.pickme.dt                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         o.resume.ResumeRespDto$ResumeDetailRespDtoV2">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="resumeUsername" column="resume_username"/>
+        <result property="resumeBirth" column="resume_birth"/>
+        <result property="resumeEmail" column="resume_email"/>
+        <result property="resumeAddress" column="resume_address"/>
+        <result property="resumeLocation" column="resume_location"/>
+        <result property="resumeCareer" column="resume_career"/>
+        <result property="resumeGrade" column="resume_grade"/>
+        <result property="resumePhoneNumber" column="resume_phone_number"/>
+        <result property="resumeSex" column="resume_sex"/>
+        <result property="resumeContent" column="resume_content"/>
+        <association property="userskillList" javaType="shop.mtcoding.pickme.dto.resume.ResumeRespDto$ResumeDetailRespDtoV2$UserskillDto">
+            <id property="id" column="id"/>
+            <result property="resumeId" column="resume_id"/> 
+            <result property="userId" column="user_id"/>
+            <result property="userskillName" column="userskill_name"/>
+            <result property="createdAt" column="created_at"/>
+        </association>
+    </resultMap>
+
+    <select id="findByResumeIdJoinUserskill" resultMap="ResumeDetailRespDtoV2">
+        select *
+        from resume_tb r inner join userskill_tb u
+        ON r.user_id = u.user_id
+        WHERE r.id = #{id}
+    </select> -->
 
     <select id="findAll" resultType="shop.mtcoding.pickme.model.Resume">
         select * from resume_tb

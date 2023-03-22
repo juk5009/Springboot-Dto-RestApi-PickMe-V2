@@ -1,5 +1,7 @@
 package shop.mtcoding.pickme.dto.resume;
 
+import java.sql.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,6 +25,7 @@ public class ResumeReq {
         private String resumeSex;
         private String resumeContent;
         private String userskillList;
+        private Timestamp createdAt;
     }
 
     @Getter

@@ -12,6 +12,19 @@ import shop.mtcoding.pickme.model.Userskill;
 @Setter
 @Getter
 public class ResumeRespDto {
+        private Integer id;
+        private Integer userId;
+        private String resumeUsername;
+        private String resumeBirth;
+        private String resumeEmail;
+        private String resumeAddress;
+        private String resumeLocation;
+        private String resumeCareer;
+        private String resumeGrade;
+        private String resumePhoneNumber;
+        private String resumeSex;
+        private String resumeContent;
+        private Timestamp createdAt;
 
     @Getter
     @Setter
@@ -57,27 +70,22 @@ public class ResumeRespDto {
         private List<UserskillDto> userSkills;
         private Timestamp createdAt;
 
-        
-
-        public static ResumeDetailRespDtoV2 ofResumeDetailRespDtoV2 (ResumeSaveReqDto resumeSaveReqDto) {
-
+        public static ResumeDetailRespDtoV2 ofResumeDetailRespDtoV2 (ResumeRespDto resumeRespDto) {
             return ResumeDetailRespDtoV2.builder()
-            .id(resumeSaveReqDto.getId())
-            .userId(resumeSaveReqDto.getUserId())
-            .resumeUsername(resumeSaveReqDto.getResumeUsername())
-            .resumeBirth(resumeSaveReqDto.getResumeBirth())
-            .resumeEmail(resumeSaveReqDto.getResumeEmail())
-            .resumeAddress(resumeSaveReqDto.getResumeAddress())
-            .resumeLocation(resumeSaveReqDto.getResumeLocation())
-            .resumeCareer(resumeSaveReqDto.getResumeCareer())
-            .resumeGrade(resumeSaveReqDto.getResumeGrade())
-            .resumePhoneNumber(resumeSaveReqDto.getResumePhoneNumber())
-            .resumeSex(resumeSaveReqDto.getResumeSex())
-            .resumeContent(resumeSaveReqDto.getResumeContent())
+            .id(resumeRespDto.getId())
+            .userId(resumeRespDto.getUserId())
+            .resumeUsername(resumeRespDto.getResumeUsername())
+            .resumeBirth(resumeRespDto.getResumeBirth())
+            .resumeEmail(resumeRespDto.getResumeEmail())
+            .resumeAddress(resumeRespDto.getResumeAddress())
+            .resumeLocation(resumeRespDto.getResumeLocation())
+            .resumeCareer(resumeRespDto.getResumeCareer())
+            .resumeGrade(resumeRespDto.getResumeGrade())
+            .resumePhoneNumber(resumeRespDto.getResumePhoneNumber())
+            .resumeSex(resumeRespDto.getResumeSex())
+            .resumeContent(resumeRespDto.getResumeContent())
             .build();
         }
-
-
 
         @Getter
         @Setter
@@ -88,23 +96,6 @@ public class ResumeRespDto {
             private String userskillName;
             private Timestamp createdAt;
 
-            public static UserskillDto ofUserskillDto (ResumeSaveReqDto resumeSaveReqDto) {
-
-                return ResumeDetailRespDtoV2.builder()
-                .id(resumeSaveReqDto.getId())
-                .userId(resumeSaveReqDto.getUserId())
-                .resumeUsername(resumeSaveReqDto.getResumeUsername())
-                .resumeBirth(resumeSaveReqDto.getResumeBirth())
-                .resumeEmail(resumeSaveReqDto.getResumeEmail())
-                .resumeAddress(resumeSaveReqDto.getResumeAddress())
-                .resumeLocation(resumeSaveReqDto.getResumeLocation())
-                .resumeCareer(resumeSaveReqDto.getResumeCareer())
-                .resumeGrade(resumeSaveReqDto.getResumeGrade())
-                .resumePhoneNumber(resumeSaveReqDto.getResumePhoneNumber())
-                .resumeSex(resumeSaveReqDto.getResumeSex())
-                .resumeContent(resumeSaveReqDto.getResumeContent())
-                .build();
-            }
         }
     }
 }
