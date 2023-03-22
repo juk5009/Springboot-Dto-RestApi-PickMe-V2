@@ -118,8 +118,7 @@ public class UserController {
      * 추천공고 페이지 호출
      */
     @GetMapping("/user/userSkillMatchForm")
-    public ResponseEntity<?> userSkillMatchForm(
-            @RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
+    public ResponseEntity<?> userSkillMatchForm(@RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
         User principal = (User) session.getAttribute("userPrincipal");
         // if (principal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
@@ -147,6 +146,7 @@ public class UserController {
                 } // for j end
             } // for x end
         } // for i end
+
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userSkillMatch), HttpStatus.OK);
     }
 
