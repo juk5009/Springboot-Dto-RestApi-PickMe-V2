@@ -4,11 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
+import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
@@ -142,32 +140,30 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/{id}")
-    public String noticeDetailForm(@PathVariable int id, Model model) {
+    public ResponseEntity<?> noticeDetailForm(@PathVariable int id) {
 
         NoticeSaveReqDto noticeDto = noticeRepository.findByCompanyIdWithNotice(id);
 
-        model.addAttribute("noticeDto", noticeDto);
-
         List<Companyskill> comskill = companyskillRepository.findByNoticeId(id);
 
-        model.addAttribute("comskillDto", comskill);
-
         List<ResumeSelectRespDto> resumeSelectList = noticeRepository.findAllWithResume();
-        model.addAttribute("resumeSelectList", resumeSelectList);
-        return "notice/noticeDetailForm";
+
+        NoticeDetailDto noticeDetailDto = new NoticeDetailDto();
+        noticeDetailDto.setNoticeDto(noticeDto);
+        noticeDetailDto.setCompanyskills(comskill);
+        noticeDetailDto.setResumeSelectList(resumeSelectList);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeDetailDto), HttpStatus.OK);
     }
 
     @GetMapping("/notice/{id}/updateNoticeForm")
-    public String noticeUpdateForm(@PathVariable int id, Model model) {
-        Company comPrincipal = (Company) session.getAttribute("comPrincipal");
-        if (comPrincipal == null) {
-            throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> noticeUpdateForm(@PathVariable int id) {
+        // Company comPrincipal = (Company) session.getAttribute("comPrincipal");
+        // if (comPrincipal == null) {
+        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
         Notice NoticePS = noticeRepository.findById(id);
 
-        model.addAttribute("notice", NoticePS);
-
-        return "notice/updateNoticeForm";
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", NoticePS), HttpStatus.OK);
     }
 
 }
