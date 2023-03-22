@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
-import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeMainRespDto;
-import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSelectRespDto;
+import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 
 @Mapper

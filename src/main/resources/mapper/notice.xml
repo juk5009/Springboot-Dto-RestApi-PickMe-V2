@@ -4,11 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="shop.mtcoding.pickme.model.NoticeRepository">
-    <select id="findMainList" resultType="shop.mtcoding.pickme.dto.notice.NoticeResp$NoticeMainRespDto">
-        SELECT nt.id, nt.notice_companyname, nt.notice_title, ct.company_profile
-        FROM notice_tb nt
-        JOIN company_tb ct
-        ON nt.company_id = ct.id;
+
+    <resultMap id="NoticeMainRespDto" type="shop.mtcoding.pickme.dto.notice.NoticeMainRespDto">
+        <id property="id" column="id"/>                  
+        <result property="noticeCompanyname" column="notice_companyname"/>
+        <result property="companyId" column="company_id"/>
+        <result property="noticeTitle" column="notice_title"/>
+        <association property="companyProfile" javaType="shop.mtcoding.pickme.dto.notice.NoticeMainRespDto$CompanyMainDto">
+            <id property="id" column="id"/>                    
+            <result property="companyProfile" column="company_profile"/>
+        </association>
+    </resultMap>
+
+    <select id="findMainList" resultMap="NoticeMainRespDto">
+    SELECT *
+    FROM notice_tb nt 
+    INNER JOIN company_tb ct 
+    ON nt.company_id = ct.id
     </select>
 
     <select id="findAllWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeResp$ResumeSelectRespDto">
@@ -17,7 +29,7 @@
         INNER JOIN resume_tb rt ON ut.id = rt.user_id;
     </select>
 
-    <select id="findAllWithNotice" resultType="shop.mtcoding.pickme.dto.notice.NoticeResp$NoticeSelectRespDto">
+    <select id="findAllWithNotice" resultType="shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto">
         SELECT  ct.company_profile, nt.notice_title, nt.id , nt.company_id
         FROM company_tb ct
         INNER JOIN notice_tb nt ON ct.id = nt.company_id;
