@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
+import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -81,25 +82,26 @@ public class CompanyController {
     }
 
     @GetMapping("/company/{id}/companyMyPage")
-    public String companyMyPage(@PathVariable int id, Model model) {
-        Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        if (comprincipal == null) {
-            throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> companyMyPage(@PathVariable int id) {
+        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
+        // if (comprincipal == null) {
+        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
         Company companyPS = companyRepository.findById(id);
-        if (companyPS == null) {
-            throw new CustomException("없는 기업정보를 수정할 수 없습니다");
-        }
-        if (companyPS.getId() != comprincipal.getId()) {
-            throw new CustomException("기업정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
-        model.addAttribute("company", companyPS);
-        Company companyProfilePS = companyRepository.findById(comprincipal.getId());
-        model.addAttribute("companyProfile", companyProfilePS);
-
+        // if (companyPS == null) {
+        // throw new CustomException("없는 기업정보를 수정할 수 없습니다");
+        // }
+        // if (companyPS.getId() != comprincipal.getId()) {
+        // throw new CustomException("기업정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
+        // }
+        Company companyProfilePS = companyRepository.findById(1);
         List<NoticeSelectRespDto> noticeSelectList = noticeRepository.findAllWithNotice();
-        model.addAttribute("noticeSelectList", noticeSelectList);
-        return "company/companyMyPage";
+
+        CompanyMypageDto dto = new CompanyMypageDto();
+        dto.setCompanyPS(companyPS);
+        dto.setCompanyProfilePS(companyProfilePS);
+        dto.setNoticeSelectList(noticeSelectList);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
     @PutMapping("/company/{id}")
@@ -138,10 +140,8 @@ public class CompanyController {
     }
 
     @GetMapping("/company/companyList")
-    public String companyList(Model model, CompanyListRespDto companyListRespDto) {
+    public ResponseEntity<?> companyList(CompanyListRespDto companyListRespDto) {
         List<CompanyListRespDto> companyList = companyRepository.findCompanyList();
-        model.addAttribute("companyList", companyList);
-        return "company/companyList";
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", companyList), HttpStatus.OK);
     }
-
 }
