@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +23,6 @@ import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
-import shop.mtcoding.pickme.model.Company;
-import shop.mtcoding.pickme.model.Resume;
 import shop.mtcoding.pickme.model.ResumeRepository;
 import shop.mtcoding.pickme.model.User;
 import shop.mtcoding.pickme.model.Userskill;
@@ -179,11 +176,10 @@ public class ResumeController {
         // User userPrincipal = (User) session.getAttribute("userPrincipal");
         // Company comprincipal = (Company) session.getAttribute("comPrincipal");
         // if (userPrincipal == null && comprincipal == null) {
-        //     throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
 
         // resumeRepository.findById(id);
-        
 
         ResumeSaveReqDto resumeDto = resumeRepository.findByUserIdWithResume(id);
 
@@ -192,8 +188,6 @@ public class ResumeController {
         ResumeDetailRespDto resumeDetailRespDto = new ResumeDetailRespDto();
         resumeDetailRespDto.setResumeSaveReqDto(resumeDto);
         resumeDetailRespDto.setUserSkills(userskill);
-
-
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeDetailRespDto), HttpStatus.OK);
     }
