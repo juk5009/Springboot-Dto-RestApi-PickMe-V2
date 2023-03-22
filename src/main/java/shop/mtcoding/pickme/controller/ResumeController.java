@@ -21,6 +21,7 @@ import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
@@ -189,9 +190,9 @@ public class ResumeController {
 
         List<Userskill> userskill = userskillRepository.findByResumeId(id);
 
-        ResumeDetailRespDto resumeDetailRespDto = new ResumeDetailRespDto();
-        resumeDetailRespDto.setResumeSaveReqDto(resumeDto);
-        resumeDetailRespDto.setUserSkills(userskill);
+        ResumeDetailRespDtoV2 resumeDetailRespDtoV2 = new ResumeDetailRespDtoV2();
+        resumeDetailRespDtoV2.set(resumeDto);
+        resumeDetailRespDtoV2.setUserSkills(userskill);
 
 
 

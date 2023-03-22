@@ -13,7 +13,7 @@
         select * from userskill_tb where id = #{id}
     </select>
 
-    <select id="findByResumeId" resultType="shop.mtcoding.pickme.model.Userskill">
+    <select id="findByResumeId" resultType="shop.mtcoding.pickme.dto.Userskill">
         select * from userskill_tb where resume_id = #{id}
     </select>  
 
