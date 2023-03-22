@@ -11,7 +11,6 @@ import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 public class Notice {

@@ -6,7 +6,7 @@
 <mapper namespace="shop.mtcoding.pickme.model.ResumeRepository">
 
     <select id="findByUserIdWithResume" resultType="shop.mtcoding.pickme.dto.resume.ResumeReq$ResumeSaveReqDto">
-        select re.id, re.resume_username , re.resume_birth, re.resume_email,  re.resume_address,  re.resume_location, re.resume_career, re.resume_grade, re.resume_phone_number,  re.resume_sex,  re.resume_content
+        select re.id, re.user_id, re.resume_username , re.resume_birth, re.resume_email,  re.resume_address,  re.resume_location, re.resume_career, re.resume_grade, re.resume_phone_number,  re.resume_sex,  re.resume_content
         from user_tb ur 
         inner join resume_tb re
         on ur.id = re.user_id
@@ -17,7 +17,7 @@
         select * from resume_tb
     </select>
 
-    <select id="findById" resultType="shop.mtcoding.pickme.model.Resume">
+    <select id="findById" resultType="shop.mtcoding.pickme.dto.resume.ResumeRespDto$ResumeUpdateRespDto">
         select * from resume_tb where id = #{id}
     </select>   
 

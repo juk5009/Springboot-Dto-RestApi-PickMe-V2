@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.model.Resume;
 import shop.mtcoding.pickme.model.ResumeRepository;
@@ -53,7 +54,7 @@ public class ResumeService {
 
     @Transactional
     public void 이력서삭제(int id, int userPrincipalId) {
-        Resume resumePS = resumeRepository.findById(id);
+        ResumeUpdateRespDto resumePS = resumeRepository.findById(id);
         if (resumePS == null) {
             throw new CustomApiException("없는 공고입니다.");
         }
@@ -71,7 +72,7 @@ public class ResumeService {
     @Transactional
     public void 이력서수정(int id, ResumeUpdateReqDto resumeUpdateReqDto, int userPrincipalId, String usSkill) {
 
-        Resume resumePS = resumeRepository.findById(id);
+        ResumeUpdateRespDto resumePS = resumeRepository.findById(id);
 
         if (resumePS == null) {
             throw new CustomApiException("없는 이력서입니다.");
