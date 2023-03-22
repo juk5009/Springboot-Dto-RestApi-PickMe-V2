@@ -122,15 +122,14 @@ public class UserController {
      * 추천공고 페이지 호출
      */
     @GetMapping("/user/userSkillMatchForm")
-    public String userSkillMatchForm(Model model,
-            @RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
+    public ResponseEntity<?> userSkillMatchForm(@RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
         User principal = (User) session.getAttribute("userPrincipal");
-        if (principal == null) {
-            throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // if (principal == null) {
+        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
 
-        List<Notice> userSkillMatch = userskillRepository.findByCompanyskillName(principal.getId(), resumeId);
-        List<Userskill> Uskill = userskillRepository.findByUserId(principal.getId());
+        List<Notice> userSkillMatch = userskillRepository.findByCompanyskillName(1, resumeId);
+        List<Userskill> Uskill = userskillRepository.findByUserId(1);
 
         for (int i = 0; i < userSkillMatch.size(); i++) {// 공고문 수만큼 도는 for문
 
@@ -152,9 +151,7 @@ public class UserController {
             } // for x end
         } // for i end
 
-        model.addAttribute("userSkillMatch", userSkillMatch);
-
-        return "user/userSkillMatchForm";
+        return new ResponseEntity<>(userSkillMatch, HttpStatus.OK);
     }
 
     @GetMapping("/")
