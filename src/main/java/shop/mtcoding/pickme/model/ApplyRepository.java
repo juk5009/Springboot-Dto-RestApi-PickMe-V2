@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import shop.mtcoding.pickme.dto.apply.ApplyDetailDto;
 import shop.mtcoding.pickme.dto.apply.ApplyReq.ApplyResumeSelectReqDto;
 import shop.mtcoding.pickme.dto.apply.ApplyResp.ApplyListRespDto;
 
@@ -20,5 +21,9 @@ public interface ApplyRepository {
         public Apply findById(int id);
 
         public List<ApplyListRespDto> findApplyList();
+
+        public ApplyDetailDto resumeJoinUserskill(int id);
+
+        public ApplyDetailDto findByUserSkill(int userId);
 
 }

@@ -51,12 +51,10 @@ public class ApplyController {
         // if (comprincipal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
-        ResumeRespDto resumeRespDto = resumeRepository.findByUserIdWithResume(id);
-        List<UserskillDto> userskill = userskillRespository.findByResumeId(id);
-        ApplyDetailDto dto = new ApplyDetailDto();
-        dto.setResumeRespDto(resumeRespDto);
-        dto.setUserskill(userskill);
-
+        // ResumeSaveReqDto resumeSaveReqDto =
+        // resumeRepository.findByUserIdWithResume(id);
+        // List<Userskill> userskill = userskillRespository.findByResumeId(id);
+        ApplyDetailDto dto = applyRepository.resumeJoinUserskill(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
