@@ -1,16 +1,27 @@
 package shop.mtcoding.pickme.dto.user;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
-import shop.mtcoding.pickme.model.User;
 
 @Getter
 @Setter
 public class UserMyPageDto {
+    private Integer id;
+    private String userName;
+    private String userPassword;
+    private String userEmail;
+    private String userProfile;
+    private Timestamp createdAt;
     private List<ResumeSelectRespDto> resumeSelectList;
-    private User userPS;
-    private User userProfilePS;
+
+    @Getter
+    @Setter
+    public static class ResumeSelectRespDto {
+        private String resumeUsername;
+        private Integer id;
+        private Integer userId;
+    }
 }

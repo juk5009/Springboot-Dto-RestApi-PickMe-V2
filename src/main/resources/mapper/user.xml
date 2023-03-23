@@ -5,6 +5,29 @@
 
 <mapper namespace="shop.mtcoding.pickme.model.UserRepository">
 
+<resultMap id="userMyPageDto" type="shop.mtcoding.pickme.dto.user.UserMyPageDto">
+        <id property="id" column="id"/>                  
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userProfile" column="user_profile"/>
+        <result property="createdAt" column="created_at"/>
+        <association property="resumeSelectList" javaType="shop.mtcoding.pickme.dto.user.UserMyPageDto$ResumeSelectRespDto"/>
+        <collection property="resumeSelectList" column="user_id" select="findByResume" />
+    </resultMap>
+
+    <select id="userJoinResume" resultMap="userMyPageDto">
+        SELECT *
+        FROM user_tb ut
+        INNER JOIN resume_tb rt
+        ON ut.id = rt.user_id
+        where ut.id = #{id}
+    </select>
+
+    <select id="findByResume" resultType="shop.mtcoding.pickme.dto.user.UserMyPageDto$ResumeSelectRespDto">
+        select resume_username, id, user_Id from resume_tb where user_id = #{userId}
+    </select>
+
 <resultMap id="UserListRespDto" type="shop.mtcoding.pickme.dto.user.UserListRespDto">
         <id property="id" column="id"/>                  
         <result property="resumeUsername" column="resume_username"/>
