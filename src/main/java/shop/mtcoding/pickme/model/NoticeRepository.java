@@ -5,15 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
-import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
+import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 
 @Mapper
 public interface NoticeRepository {
 
-    public NoticeSaveReqDto findByCompanyIdWithNotice(int id);
+    public NoticeSaveRespDto findByCompanyIdWithNotice(int id);
 
     public List<Notice> findAll();
 
@@ -34,5 +35,9 @@ public interface NoticeRepository {
     public List<ResumeSelectRespDto> findAllWithResume();
 
     public List<NoticeSelectRespDto> findAllWithNotice();
+
+    public NoticeDto noticeJoinCompanySkill(int id);
+
+    public NoticeDto findByCompanySkill(int companyId);
 
 }

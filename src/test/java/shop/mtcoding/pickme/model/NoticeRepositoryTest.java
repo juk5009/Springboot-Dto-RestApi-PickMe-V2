@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
+import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 
 @Transactional
@@ -108,7 +109,7 @@ public class NoticeRepositoryTest {
         ObjectMapper om = new ObjectMapper(); // Jackson
 
         // when
-        NoticeSaveReqDto noticeSaveReqDto = noticeRepository.findByCompanyIdWithNotice(id);
+        NoticeSaveRespDto noticeSaveReqDto = noticeRepository.findByCompanyIdWithNotice(id);
         String responseBody = om.writeValueAsString(noticeSaveReqDto);
         System.out.println("테스트 : " + responseBody);
         // then

@@ -8,7 +8,6 @@ import lombok.ToString;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 
-@ToString
 @Getter
 @Setter
 public class Companyskill {
@@ -31,7 +30,4 @@ public class Companyskill {
         this.companyskillName = noticeUpdateReqDto.getCompanyskillList();
     }
 
-    public Companyskill() {
-
-    }
 }

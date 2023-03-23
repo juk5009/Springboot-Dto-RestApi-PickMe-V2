@@ -2,8 +2,6 @@ package shop.mtcoding.pickme.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,23 +15,13 @@ import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.apply.ApplyDetailDto;
 import shop.mtcoding.pickme.dto.apply.ApplyReq.ApplyResumeSelectReqDto;
 import shop.mtcoding.pickme.dto.apply.ApplyResp.ApplyListRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2.UserskillDto;
 import shop.mtcoding.pickme.model.ApplyRepository;
-import shop.mtcoding.pickme.model.ResumeRepository;
-import shop.mtcoding.pickme.model.UserskillRepository;
 
 @RequiredArgsConstructor
 @RestController
 public class ApplyController {
 
     private final ApplyRepository applyRepository;
-
-    private final ResumeRepository resumeRepository;
-
-    private final HttpSession session;
-
-    private final UserskillRepository userskillRespository;
 
     @GetMapping("/apply/applyUserList")
     public ResponseEntity<?> applyUserList() {
