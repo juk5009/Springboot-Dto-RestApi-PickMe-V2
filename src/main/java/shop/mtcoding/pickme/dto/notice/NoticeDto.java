@@ -21,16 +21,13 @@ public class NoticeDto {
     private String noticeLocation;
     private String noticeContent;
     private List<Companyskill> companyskillList;
-    private Timestamp createdAt;
 
     @Setter
     @Getter
     public static class CompanyskillSaveRespDto {
         private Integer id;
-        private Integer noticeId;
-        private Integer companyId;
         private String companyskillName;
-        private Timestamp createdAt;
+
     }
 
 }
