@@ -27,9 +27,6 @@ public class ApplyDetailDto {
     @Getter
     public static class UserskillDto {
         private Integer id;
-        private Integer resumeId;
-        private Integer userId;
         private String userskillName;
-        private Timestamp createdAt;
     }
 }
