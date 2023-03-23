@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class NoticeDto {
+public class NoticeUpdateDto {
     private Integer id;
     private Integer companyId;
     private String noticeCompanyname;
@@ -19,12 +19,21 @@ public class NoticeDto {
     private String noticeLocation;
     private String noticeContent;
     private List<CompanyskillSaveRespDto> companyskillList;
+    private CompanyDto company;
 
     @Setter
     @Getter
     public static class CompanyskillSaveRespDto {
         private Integer id;
         private String companyskillName;
+
+    }
+
+    @Setter
+    @Getter
+    public static class CompanyDto {
+        private Integer id;
+        private String companyProfile;
 
     }
 

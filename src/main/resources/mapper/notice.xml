@@ -5,6 +5,41 @@
 
 <mapper namespace="shop.mtcoding.pickme.model.NoticeRepository">
 
+    <resultMap id="noticeUpdateDto" type="shop.mtcoding.pickme.dto.notice.NoticeUpdateDto">
+        <id property="id" column="id"/>                  
+        <result property="companyId" column="company_id"/>
+        <result property="noticeCompanyname" column="notice_companyname"/>
+        <result property="noticeTitle" column="notice_title"/>
+        <result property="noticeCareer" column="notice_career"/>
+        <result property="noticePay" column="notice_pay"/>
+        <result property="noticeEmploytype" column="notice_employtype"/>
+        <result property="noticeGrade" column="notice_grade"/>
+        <result property="noticeLocation" column="notice_location"/>
+        <result property="noticeContent" column="notice_content"/>
+        <association property="company" javaType="shop.mtcoding.pickme.dto.notice.NoticeUpdateDto$CompanyDto">
+            <id property="id" column="id"/>
+            <result property="companyProfile" column="company_profile"/>      
+            
+        </association>        
+
+        <association property="companyskillList" javaType="shop.mtcoding.pickme.dto.notice.NoticeUpdateDto$CompanyskillSaveRespDto"/>
+        <collection property="companyskillList" column="company_id" select="findByCompanySkills"/>
+    </resultMap>
+
+    <select id="noticeJoinCompanySkillJoinCompany" resultMap="noticeUpdateDto">
+        select * 
+        from notice_tb nt inner join companyskill_tb cst
+        ON nt.company_id = cst.company_id
+        inner join company_tb ct
+        ON nt.company_id = ct.id 
+        WHERE nt.id = #{id}
+    </select>    
+
+
+    <select id="findByCompanySkills" resultType="shop.mtcoding.pickme.dto.notice.NoticeUpdateDto$CompanyskillSaveRespDto">
+      select id,companyskill_name from companyskill_tb where company_id = #{companyId}
+    </select>
+
     <resultMap id="noticeDto" type="shop.mtcoding.pickme.dto.notice.NoticeDto">
         <id property="id" column="id"/>                  
         <result property="companyId" column="company_id"/>

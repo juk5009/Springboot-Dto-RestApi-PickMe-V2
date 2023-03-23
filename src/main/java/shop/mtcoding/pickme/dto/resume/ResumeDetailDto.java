@@ -4,7 +4,6 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import shop.mtcoding.pickme.model.Userskill;
 
 @Setter
 @Getter
@@ -21,7 +20,7 @@ public class ResumeDetailDto {
     private String resumePhoneNumber;
     private String resumeSex;
     private String resumeContent;
-    private List<Userskill> userskillList;
+    private List<UserskillSaveRespDto> userskillList;
 
     @Getter
     @Setter
@@ -30,4 +29,5 @@ public class ResumeDetailDto {
         private String userskillName;
 
     }
+
 }
