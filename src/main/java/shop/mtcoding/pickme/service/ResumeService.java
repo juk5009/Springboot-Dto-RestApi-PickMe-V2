@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
@@ -18,14 +19,13 @@ import shop.mtcoding.pickme.model.Userskill;
 import shop.mtcoding.pickme.model.UserskillRepository;
 
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Service
 public class ResumeService {
 
-    @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
 
-    @Autowired
-    private UserskillRepository userskillRepository;
+    private final UserskillRepository userskillRepository;
 
     @Transactional
     public void 이력서작성(ResumeSaveReqDto resumeSaveReqDto, int principalId, String usSkill) {

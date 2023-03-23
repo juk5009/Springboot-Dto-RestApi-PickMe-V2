@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -15,11 +16,12 @@ import shop.mtcoding.pickme.model.Company;
 import shop.mtcoding.pickme.model.CompanyRepository;
 import shop.mtcoding.pickme.util.PathUtil;
 
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Service
 public class CompanyService {
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     @Transactional
     public void 기업회원가입(CompanyJoinReqDto companyJoinReqDto) {

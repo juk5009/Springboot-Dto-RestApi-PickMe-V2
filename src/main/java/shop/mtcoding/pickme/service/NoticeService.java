@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
@@ -17,14 +18,13 @@ import shop.mtcoding.pickme.model.Notice;
 import shop.mtcoding.pickme.model.NoticeRepository;
 
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Service
 public class NoticeService {
 
-    @Autowired
-    private NoticeRepository noticeRepository;
+    private final NoticeRepository noticeRepository;
 
-    @Autowired
-    private CompanyskillRepository companyskillRepository;
+    private final CompanyskillRepository companyskillRepository;
 
     @Transactional
     public void 공고작성(NoticeSaveReqDto noticeSaveReqDto, int comPrincipalId, String comSkill) {
