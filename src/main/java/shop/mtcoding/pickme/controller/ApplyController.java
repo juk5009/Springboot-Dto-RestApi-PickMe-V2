@@ -18,11 +18,9 @@ import shop.mtcoding.pickme.dto.apply.ApplyDetailDto;
 import shop.mtcoding.pickme.dto.apply.ApplyReq.ApplyResumeSelectReqDto;
 import shop.mtcoding.pickme.dto.apply.ApplyResp.ApplyListRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2.UserskillDto;
 import shop.mtcoding.pickme.model.ApplyRepository;
 import shop.mtcoding.pickme.model.ResumeRepository;
-import shop.mtcoding.pickme.model.Userskill;
 import shop.mtcoding.pickme.model.UserskillRepository;
 
 @RequiredArgsConstructor
@@ -58,7 +56,7 @@ public class ApplyController {
         ApplyDetailDto dto = new ApplyDetailDto();
         dto.setResumeRespDto(resumeRespDto);
         dto.setUserskill(userskill);
-        
+
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
