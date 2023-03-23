@@ -86,7 +86,7 @@ public class CompanyController {
         // if (comprincipal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
-        Company companyPS = companyRepository.findById(id);
+        Company companyPS = companyRepository.findById(1);
         // if (companyPS == null) {
         // throw new CustomException("없는 기업정보를 수정할 수 없습니다");
         // }
@@ -94,12 +94,9 @@ public class CompanyController {
         // throw new CustomException("기업정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
         // }
         Company companyProfilePS = companyRepository.findById(1);
-        List<NoticeSelectRespDto> noticeSelectList = noticeRepository.findAllWithNotice();
+        List<NoticeSelectRespDto> noticeSelectList = noticeRepository.findAllWithNotice(1);
 
-        CompanyMypageDto dto = new CompanyMypageDto();
-        dto.setCompanyPS(companyPS);
-        dto.setCompanyProfilePS(companyProfilePS);
-        dto.setNoticeSelectList(noticeSelectList);
+        CompanyMypageDto dto = companyRepository.companyJoinNotice(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
