@@ -21,6 +21,7 @@ public class NoticeDto {
     private String noticeLocation;
     private String noticeContent;
     private List<Companyskill> companyskillList;
+    private Timestamp createdAt;
 
     @Setter
     @Getter
