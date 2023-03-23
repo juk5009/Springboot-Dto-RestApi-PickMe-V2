@@ -28,9 +28,4 @@ public class CompanyMypageDto {
         private Integer companyId;
 
     }
-
-    // private List<NoticeSelectRespDto> noticeSelectList;
-    // private Company companyProfilePS;
-    // private Company companyPS;
-
 }
