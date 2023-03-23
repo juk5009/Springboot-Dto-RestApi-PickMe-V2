@@ -63,7 +63,7 @@
         WHERE c.id = #{id}
     </select>
 
-    <select id="findByNotice" resultType="java.lang.String">
-      select notice_title from notice_tb where company_id = #{companyId}
+    <select id="findByNotice" resultType="shop.mtcoding.pickme.dto.company.CompanyMypageDto$NoticeListDto">
+      select notice_title, id, company_id from notice_tb where company_id = #{companyId}
    </select>
 </mapper>
