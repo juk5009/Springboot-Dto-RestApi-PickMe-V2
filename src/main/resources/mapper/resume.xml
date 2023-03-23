@@ -5,6 +5,43 @@
 
 <mapper namespace="shop.mtcoding.pickme.model.ResumeRepository">
 
+    <resultMap id="resumeUpdateDto" type="shop.mtcoding.pickme.dto.resume.ResumeUpdateDto">
+        <id property="id" column="id"/>                  
+        <result property="userId" column="user_id"/>
+        <result property="resumeUsername" column="resume_username"/>
+        <result property="resumeBirth" column="resume_birth"/>
+        <result property="resumeEmail" column="resume_email"/>
+        <result property="resumeAddress" column="resume_address"/>
+        <result property="resumeLocation" column="resume_location"/>
+        <result property="resumeCareer" column="resume_career"/>
+        <result property="resumeGrade" column="resume_grade"/>
+        <result property="resumePhoneNumber" column="resume_phone_number"/>
+        <result property="resumeSex" column="resume_sex"/>
+        <result property="resumeContent" column="resume_content"/>
+        <association property="user" javaType="shop.mtcoding.pickme.dto.resume.ResumeUpdateDto$UserDto">
+            <id property="id" column="id"/>
+            <result property="userProfile" column="user_profile"/>      
+            
+        </association>  
+
+        <association property="userskillList" javaType="shop.mtcoding.pickme.dto.resume.ResumeUpdateDto$UserskillSaveRespDto"/>
+        <collection property="userskillList" column="user_id" select="findUserSkills"/>
+    </resultMap>
+    <select id="resumeJoinUserskillJoinUser" resultMap="resumeUpdateDto">
+        select *
+        from resume_tb rt 
+        inner join userskill_tb ust
+        ON rt.user_id = ust.user_id
+        inner join user_tb ut
+        ON rt.user_id = ut.id
+        WHERE rt.id = #{id} 
+    </select>
+
+    <select id="findUserSkills" resultType="shop.mtcoding.pickme.dto.resume.ResumeDetailDto$UserskillSaveRespDto">
+      select id, userskill_name from userskill_tb where user_id = #{userId}
+   </select>
+
+
     <resultMap id="resumeDetailDto" type="shop.mtcoding.pickme.dto.resume.ResumeDetailDto">
         <id property="id" column="id"/>                  
         <result property="userId" column="user_id"/>

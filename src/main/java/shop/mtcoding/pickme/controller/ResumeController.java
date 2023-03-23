@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
+import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
@@ -192,8 +193,8 @@ public class ResumeController {
     @GetMapping("/resume/{id}/updateResumeForm")
     public ResponseEntity<?> resumeUpdateForm(@PathVariable int id) {
 
-        ResumeUpdateRespDto resumeUpdateRespDto = resumeRepository.findById(id);
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeUpdateRespDto), HttpStatus.OK);
+        ResumeUpdateDto resumeUpdateDto = resumeRepository.resumeJoinUserskillJoinUser(id);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeUpdateDto), HttpStatus.OK);
     }
 
 }
