@@ -31,8 +31,34 @@
         INNER JOIN resume_tb rt ON at.resume_id = rt.id;
     </select>
 
-    
+     <resultMap id="applyDetailDto" type="shop.mtcoding.pickme.dto.apply.ApplyDetailDto">
+        <id property="id" column="id"/>                  
+        <result property="userId" column="user_id"/>
+        <result property="resumeUsername" column="resume_username"/>
+        <result property="resumeBirth" column="resume_birth"/>
+        <result property="resumeEmail" column="resume_email"/>
+        <result property="resumeAddress" column="resume_address"/>
+        <result property="resumeLocation" column="resume_location"/>
+        <result property="resumeCareer" column="resume_career"/>
+        <result property="resumeGrade" column="resume_grade"/>
+        <result property="resumePhoneNumber" column="resume_phone_number"/>
+        <result property="resumeSex" column="resume_sex"/>
+        <result property="resumeContent" column="resume_content"/>
 
-    
+        <association property="userskillList" javaType="shop.mtcoding.pickme.dto.apply.ApplyDetailDto$UserskillDto"/>
+        <collection property="userskillList" column="user_id" select="findByUserSkill"/>
+    </resultMap>
+
+    <select id="resumeJoinUserskill" resultMap="applyDetailDto">
+        select *
+        from resume_tb r inner join userskill_tb u
+        ON r.user_id = u.user_id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="findByUserSkill" resultType="java.lang.String">
+      select userskill_name from userskill_tb where user_id = #{userId}
+   </select>
+
 
 </mapper>
