@@ -21,11 +21,11 @@ import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
+import shop.mtcoding.pickme.dto.notice.NoticeUpdateDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.Company;
-import shop.mtcoding.pickme.model.Notice;
 import shop.mtcoding.pickme.model.NoticeRepository;
 import shop.mtcoding.pickme.service.NoticeService;
 
@@ -157,9 +157,9 @@ public class NoticeController {
         // if (comPrincipal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
-        Notice NoticePS = noticeRepository.findById(id);
+        NoticeUpdateDto noticeUpdateDto = noticeRepository.noticeJoinCompanySkillJoinCompany(id);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", NoticePS), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeUpdateDto), HttpStatus.OK);
     }
 
 }

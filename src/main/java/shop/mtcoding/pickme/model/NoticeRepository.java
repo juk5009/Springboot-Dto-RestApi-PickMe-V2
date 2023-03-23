@@ -9,6 +9,7 @@ import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
+import shop.mtcoding.pickme.dto.notice.NoticeUpdateDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 
 @Mapper
@@ -39,5 +40,9 @@ public interface NoticeRepository {
     public NoticeDto noticeJoinCompanySkill(int id);
 
     public NoticeDto findByCompanySkill(int companyId);
+
+    public NoticeUpdateDto noticeJoinCompanySkillJoinCompany(int id);
+
+    public NoticeUpdateDto findByCompanySkills(int companyId);
 
 }
