@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyResp.CompanyListRespDto;
@@ -32,5 +33,9 @@ public interface CompanyRepository {
                         @Param("companyProfile") String companyProfile);
 
         public Company findByCompanyname(String companyName);
+
+        public CompanyMypageDto companyJoinNotice(int id);
+
+        public CompanyMypageDto findByNotice(int companyId);
 
 }

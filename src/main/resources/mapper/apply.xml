@@ -53,7 +53,7 @@
         select *
         from resume_tb r inner join userskill_tb u
         ON r.user_id = u.user_id
-        WHERE r.id = #{id}
+        WHERE r.id = #{id} 
     </select>
 
     <select id="findByUserSkill" resultType="shop.mtcoding.pickme.dto.apply.ApplyDetailDto$UserskillDto">

@@ -43,4 +43,27 @@
     <update id="updateCompanyProfile">
           update company_tb set company_name= #{companyName}, company_password= #{companyPassword}, company_email= #{companyEmail} ,company_profile = #{companyProfile} where id = #{id} 
     </update>
+
+
+    <resultMap id="companyMypageDto" type="shop.mtcoding.pickme.dto.company.CompanyMypageDto">
+        <id property="id" column="id"/>                  
+        <result property="companyName" column="company_name"/>
+        <result property="companyPassword" column="company_password"/>
+        <result property="companyEmail" column="company_email"/>
+        <result property="companyProfile" column="company_profile"/>
+        <result property="createdAt" column="created_at"/>
+        <association property="noticeList" javaType="shop.mtcoding.pickme.dto.company.CompanyMypageDto$NoticeListDto"/>
+        <collection property="noticeList" column="company_id" select="findByNotice"/>
+    </resultMap>
+
+    <select id="companyJoinNotice" resultMap="companyMypageDto">
+        select *
+        from company_tb c inner join notice_tb n
+        ON c.id = n.company_id
+        WHERE c.id = #{id}
+    </select>
+
+    <select id="findByNotice" resultType="shop.mtcoding.pickme.dto.company.CompanyMypageDto$NoticeListDto">
+      select notice_title, id, company_id from notice_tb where company_id = #{companyId}
+   </select>
 </mapper>

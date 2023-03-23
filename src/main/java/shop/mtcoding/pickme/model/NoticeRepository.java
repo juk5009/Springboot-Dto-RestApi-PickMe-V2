@@ -34,7 +34,7 @@ public interface NoticeRepository {
 
     public List<ResumeSelectRespDto> findAllWithResume();
 
-    public List<NoticeSelectRespDto> findAllWithNotice();
+    public List<NoticeSelectRespDto> findAllWithNotice(int id);
 
     public NoticeDto noticeJoinCompanySkill(int id);
 
