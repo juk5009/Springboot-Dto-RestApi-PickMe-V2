@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.pickme.dto.user.UserListRespDto;
+import shop.mtcoding.pickme.dto.user.UserMyPageDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 
 @Mapper
@@ -31,5 +32,9 @@ public interface UserRepository {
         public int updateUserProfile(@Param("id") int id, @Param("userName") String userName,
                         @Param("userPassword") String userPassword, @Param("userEmail") String userEmail,
                         @Param("userProfile") String userProfile);
+
+        public UserMyPageDto userJoinResume(int id);
+
+        public UserMyPageDto findByResume(int userId);
 
 }

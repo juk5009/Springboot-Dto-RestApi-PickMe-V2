@@ -177,24 +177,20 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}/userMyPage")
-    public ResponseEntity<?> MyPage(@PathVariable int id, MultipartFile userProfile) {
+    public ResponseEntity<?> MyPage(@PathVariable int id) {
         // User principal = (User) session.getAttribute("userPrincipal");
         // if (principal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
-        User userPS = userRepository.findById(id);
+        User userPS = userRepository.findById(1);
         // if (userPS == null) {
         // throw new CustomException("해당 정보를 수정할 수 없습니다");
         // }
         // if (userPS.getUserName() != principal.getUserName()) {
         // throw new CustomException("해당정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
         // }
-        User userProfilePS = userRepository.findById(1);
         List<ResumeSelectRespDto> resumeSelectList = noticeRepository.findAllWithResume();
-        UserMyPageDto dto = new UserMyPageDto();
-        dto.setResumeSelectList(resumeSelectList);
-        dto.setUserPS(userPS);
-        dto.setUserProfilePS(userProfilePS);
+        UserMyPageDto dto = userRepository.userJoinResume(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
