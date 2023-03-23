@@ -22,12 +22,10 @@ import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyResp.CompanyListRespDto;
-import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.Company;
 import shop.mtcoding.pickme.model.CompanyRepository;
-import shop.mtcoding.pickme.model.NoticeRepository;
 import shop.mtcoding.pickme.service.CompanyService;
 
 @RequiredArgsConstructor
@@ -39,8 +37,6 @@ public class CompanyController {
     private final HttpSession session;
 
     private final CompanyRepository companyRepository;
-
-    private final NoticeRepository noticeRepository;
 
     @PostMapping("/companyJoin")
     public String companyJoin(CompanyJoinReqDto companyJoinReqDto) {

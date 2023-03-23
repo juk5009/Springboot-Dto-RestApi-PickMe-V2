@@ -1,7 +1,5 @@
 package shop.mtcoding.pickme.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -17,17 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
+import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2.UserskillDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.ResumeRepository;
 import shop.mtcoding.pickme.model.User;
-import shop.mtcoding.pickme.model.UserskillRepository;
 import shop.mtcoding.pickme.service.ResumeService;
 
 @RequiredArgsConstructor
@@ -37,8 +32,6 @@ public class ResumeController {
     private final ResumeService resumeService;
 
     private final ResumeRepository resumeRepository;
-
-    private final UserskillRepository userskillRepository;
 
     private final HttpSession session;
 
@@ -182,17 +175,17 @@ public class ResumeController {
 
         // resumeRepository.findById(id);
 
-        ResumeRespDto resumeDto = resumeRepository.findByUserIdWithResume(id);
+        // ResumeRespDto resumeDto = resumeRepository.findByUserIdWithResume(id);
 
-        List<UserskillDto> userskillDto = userskillRepository.findByResumeId(id);
+        // List<UserskillDto> userskillDto = userskillRepository.findByResumeId(id);
 
-        ResumeDetailRespDtoV2 resumeDetailRespDtoV2 = ResumeDetailRespDtoV2.ofResumeDetailRespDtoV2(resumeDto);
-        resumeDetailRespDtoV2.setUserSkills(userskillDto);
+        // ResumeDetailRespDtoV2 resumeDetailRespDtoV2 =
+        // ResumeDetailRespDtoV2.ofResumeDetailRespDtoV2(resumeDto);
+        // resumeDetailRespDtoV2.setUserSkills(userskillDto);
 
-        System.out.println("테스트ttt : " + resumeDetailRespDtoV2.getResumeEmail());
-        System.out.println("테스트ttt : " + resumeDetailRespDtoV2.getUserSkills().size());
+        ResumeDetailDto resumeDetailDto = resumeRepository.resumeJoinUserskills(id);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeDetailRespDtoV2), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeDetailDto), HttpStatus.OK);
 
     }
 

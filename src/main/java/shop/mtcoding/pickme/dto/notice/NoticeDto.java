@@ -1,6 +1,5 @@
 package shop.mtcoding.pickme.dto.notice;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Getter;
