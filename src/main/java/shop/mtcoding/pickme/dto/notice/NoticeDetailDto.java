@@ -9,6 +9,6 @@ import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 @Setter
 @Getter
 public class NoticeDetailDto {
-    NoticeDto noticeDetailDto;
+    NoticeDto noticeDto;
     List<ResumeSelectRespDto> resumeSelect;
 }

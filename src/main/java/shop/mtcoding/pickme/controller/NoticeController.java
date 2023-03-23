@@ -145,7 +145,7 @@ public class NoticeController {
 
         NoticeDetailDto noticeDetailDto = new NoticeDetailDto();
 
-        noticeDetailDto.setNoticeDetailDto(noticeDto);
+        noticeDetailDto.setNoticeDto(noticeDto);
         noticeDetailDto.setResumeSelect(resumeSelectList);
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeDetailDto), HttpStatus.OK);
