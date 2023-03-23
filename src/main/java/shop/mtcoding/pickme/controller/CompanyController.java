@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,7 @@ public class CompanyController {
     private final CompanyRepository companyRepository;
 
     @PostMapping("/companyJoin")
-    public String companyJoin(CompanyJoinReqDto companyJoinReqDto) {
+    public ResponseEntity<?> companyJoin(@RequestBody CompanyJoinReqDto companyJoinReqDto) {
         if (companyJoinReqDto.getCompanyName() == null ||
                 companyJoinReqDto.getCompanyName().isEmpty()) {
             throw new CustomException("CompanyName을 입력해주세요", HttpStatus.BAD_REQUEST);
@@ -55,11 +56,11 @@ public class CompanyController {
 
         companyService.기업회원가입(companyJoinReqDto);
 
-        return "redirect:/loginForm";
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", null), HttpStatus.OK);
     }
 
     @PostMapping("/companylogin")
-    public String companylogin(CompanyLoginReqDto companyLoginReqDto) {
+    public ResponseEntity<?> companylogin(@RequestBody CompanyLoginReqDto companyLoginReqDto) {
         if (companyLoginReqDto.getCompanyName() == null || companyLoginReqDto.getCompanyName().isEmpty()) {
             throw new CustomException("CompanyName을 작성해주세요");
         }
@@ -68,12 +69,12 @@ public class CompanyController {
         }
         Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
         session.setAttribute("comPrincipal", comPrincipal);
-        return "redirect:/";
+        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", null), HttpStatus.OK);
     }
 
     @GetMapping("/companyJoinForm")
-    public String companyJoinForm() {
-        return "company/companyJoinForm";
+    public ResponseEntity<?> companyJoinForm() {
+        return new ResponseEntity<>(new ResponseDto<>(1, "기업 회원가입 페이지 성공", null), HttpStatus.OK);
     }
 
     @GetMapping("/company/{id}/companyMyPage")
@@ -118,18 +119,19 @@ public class CompanyController {
     }
 
     @PostMapping("/company/companyProfileUpdate")
-    public String companyProfileUpdate(MultipartFile companyProfile) {
-        Company comPrincipal = (Company) session.getAttribute("comPrincipal");
-        if (comPrincipal == null) {
-            return "redirect:/loginForm";
-        }
+    public ResponseEntity<?> companyProfileUpdate(
+            @RequestParam(value = "companyProfile") MultipartFile companyProfile) {
+        // Company comPrincipal = (Company) session.getAttribute("comPrincipal");
+        // if (comPrincipal == null) {
+        // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        // }
         if (companyProfile.isEmpty()) {
             throw new CustomException("사진이 전송되지 않았습니다");
         }
-        Company comPS = companyService.유저프로필사진수정(companyProfile, comPrincipal.getId());
+        Company comPS = companyService.유저프로필사진수정(companyProfile, 1);
         session.setAttribute("comPrincipal", comPS);
 
-        return "redirect:/";
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/company/companyList")
