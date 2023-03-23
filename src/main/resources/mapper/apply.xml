@@ -56,9 +56,9 @@
         WHERE r.id = #{id}
     </select>
 
-    <select id="findByUserSkill" resultType="java.lang.String">
-      select userskill_name from userskill_tb where user_id = #{userId}
-    </select>
+    <select id="findByUserSkill" resultType="shop.mtcoding.pickme.dto.apply.ApplyDetailDto$UserskillDto">
+      select userskill_name, id from userskill_tb where user_id = #{userId}
+   </select>
 
 
 </mapper>
