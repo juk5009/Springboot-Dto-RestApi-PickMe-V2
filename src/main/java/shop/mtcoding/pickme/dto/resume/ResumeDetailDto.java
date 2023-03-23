@@ -1,13 +1,14 @@
-package shop.mtcoding.pickme.dto.apply;
+package shop.mtcoding.pickme.dto.resume;
 
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import shop.mtcoding.pickme.model.Userskill;
 
 @Setter
 @Getter
-public class ApplyDetailDto {
+public class ResumeDetailDto {
     private Integer id;
     private Integer userId;
     private String resumeUsername;
@@ -20,12 +21,13 @@ public class ApplyDetailDto {
     private String resumePhoneNumber;
     private String resumeSex;
     private String resumeContent;
-    private List<UserskillDto> userskillList;
+    private List<Userskill> userskillList;
 
-    @Setter
     @Getter
-    public static class UserskillDto {
+    @Setter
+    public static class UserskillSaveRespDto {
         private Integer id;
         private String userskillName;
+
     }
 }

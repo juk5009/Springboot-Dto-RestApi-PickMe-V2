@@ -2,11 +2,15 @@ package shop.mtcoding.pickme.model;
 
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Companyskill {

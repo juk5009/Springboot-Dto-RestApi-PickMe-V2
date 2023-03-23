@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
@@ -34,4 +35,8 @@ public interface ResumeRepository {
         public int deleteById(int id);
 
         public ResumeDetailRespDtoV2 resumeJoinUserskill(int id);
+
+        public ResumeDetailDto resumeJoinUserskills(int id);
+
+        public ResumeDetailDto findUserSkill(int userId);
 }
