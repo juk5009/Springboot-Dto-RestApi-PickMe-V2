@@ -28,7 +28,8 @@
 
     <select id="noticeJoinCompanySkillJoinCompany" resultMap="noticeUpdateDto">
         select * 
-        from notice_tb nt inner join companyskill_tb cst
+        from notice_tb nt 
+        inner join companyskill_tb cst
         ON nt.company_id = cst.company_id
         inner join company_tb ct
         ON nt.company_id = ct.id 

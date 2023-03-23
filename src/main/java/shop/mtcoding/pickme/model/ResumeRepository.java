@@ -9,6 +9,7 @@ import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 
 @Mapper
 public interface ResumeRepository {
@@ -39,4 +40,8 @@ public interface ResumeRepository {
         public ResumeDetailDto resumeJoinUserskills(int id);
 
         public ResumeDetailDto findUserSkill(int userId);
+
+        public ResumeUpdateDto resumeJoinUserskillJoinUser(int id);
+
+        public ResumeUpdateDto findUserSkills(int userId);
 }
