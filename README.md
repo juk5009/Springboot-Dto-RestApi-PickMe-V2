@@ -20,7 +20,7 @@ image base64로 변환
 ### 3단계
 JWT 
 Filter
-AOP(유효성검사)
+AOP(유효성검사).
 
 
 
