@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @PostMapping("/userJoin")
-    public String join(UserJoinReqDto userJoinReqDto) {
+    public @ResponseBody ResponseEntity<?> join(@RequestBody UserJoinReqDto userJoinReqDto) {
         if (userJoinReqDto.getUserName() == null ||
                 userJoinReqDto.getUserName().isEmpty()) {
             throw new CustomException("userName를 입력해주세요", HttpStatus.BAD_REQUEST);
@@ -92,16 +92,17 @@ public class UserController {
             throw new CustomException("userEmail 입력해주세요", HttpStatus.BAD_REQUEST);
         }
         userService.회원가입(userJoinReqDto);
-        return "redirect:/loginForm";
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);
     }
 
     @GetMapping("/loginForm")
-    public String loginForm() {
-        return "user/loginForm";
+    public ResponseDto<?> loginForm() {
+        return new ResponseDto<>(1, "로그인 페이지 불러오기 성공", null);
     }
 
     @PostMapping("/userlogin")
-    public ResponseEntity<?> userlogin(UserLoginReqDto userLoginReqDto) {
+    public ResponseEntity<?> userlogin(@RequestBody UserLoginReqDto userLoginReqDto) {
         if (userLoginReqDto.getUserName() == null || userLoginReqDto.getUserName().isEmpty()) {
             throw new CustomException("userName를 작성해주세요");
         }
@@ -110,7 +111,7 @@ public class UserController {
         }
         User userPrincipal = userService.유저로그인(userLoginReqDto);
         session.setAttribute("userPrincipal", userPrincipal);
-        return new ResponseEntity<>(null);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPrincipal), HttpStatus.OK);
     }
 
     /*
@@ -201,17 +202,21 @@ public class UserController {
     }
 
     @PostMapping("/user/userProfileUpdate")
-    public String userProfileUpdate(MultipartFile userProfile) {
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            return "redirect:/loginForm";
+    public ResponseEntity<String> userProfileUpdate(MultipartFile userProfile) {
+        // User userPrincipal = (User) session.getAttribute("userPrincipal");
+        // if (userPrincipal == null) {
+        // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        // }
+        // if (userProfile.isEmpty()) {
+        // return ResponseEntity.badRequest().body("사진이 전송되지 않았습니다");
+        // }
+        try {
+            User userPS = userService.유저프로필사진수정(userProfile, 1);
+            session.setAttribute("userPrincipal", userPS);
+            return ResponseEntity.ok("프로필 사진이 업데이트 되었습니다");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생하였습니다");
         }
-        if (userProfile.isEmpty()) {
-            throw new CustomException("사진이 전송되지 않았습니다");
-        }
-        User userPS = userService.유저프로필사진수정(userProfile, userPrincipal.getId());
-        session.setAttribute("userPrincipal", userPS);
-        return "redirect:/";
     }
 
 }
