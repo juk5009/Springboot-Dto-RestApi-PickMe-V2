@@ -26,10 +26,8 @@ public class NoticeDto {
     @Getter
     public static class CompanyskillSaveRespDto {
         private Integer id;
-        private Integer noticeId;
-        private Integer companyId;
         private String companyskillName;
-        private Timestamp createdAt;
+
     }
 
 }

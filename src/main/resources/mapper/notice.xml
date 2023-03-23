@@ -29,8 +29,8 @@
         WHERE nt.id = #{id}
     </select>
 
-    <select id="findByCompanySkill" resultType="java.lang.String">
-      select companyskill_name from companyskill_tb where company_id = #{companyId}
+    <select id="findByCompanySkill" resultType="shop.mtcoding.pickme.dto.notice.NoticeDto$CompanyskillSaveRespDto">
+      select id,companyskill_name from companyskill_tb where company_id = #{companyId}
     </select>
 
     <resultMap id="NoticeMainRespDto" type="shop.mtcoding.pickme.dto.notice.NoticeMainRespDto">
