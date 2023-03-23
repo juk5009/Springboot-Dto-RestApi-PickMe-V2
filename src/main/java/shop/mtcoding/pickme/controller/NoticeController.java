@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
+import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.Company;
-import shop.mtcoding.pickme.model.Companyskill;
-import shop.mtcoding.pickme.model.CompanyskillRepository;
 import shop.mtcoding.pickme.model.Notice;
 import shop.mtcoding.pickme.model.NoticeRepository;
 import shop.mtcoding.pickme.service.NoticeService;
@@ -39,8 +38,6 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     private final NoticeRepository noticeRepository;
-
-    private final CompanyskillRepository companyskillRepository;
 
     @PostMapping("/saveNotice")
     public @ResponseBody ResponseEntity<?> saveNotice(@RequestBody NoticeSaveReqDto noticeSaveReqDto) {
@@ -142,16 +139,15 @@ public class NoticeController {
     @GetMapping("/notice/{id}")
     public ResponseEntity<?> noticeDetailForm(@PathVariable int id) {
 
-        NoticeSaveReqDto noticeDto = noticeRepository.findByCompanyIdWithNotice(id);
-
-        List<Companyskill> comskill = companyskillRepository.findByNoticeId(id);
-
         List<ResumeSelectRespDto> resumeSelectList = noticeRepository.findAllWithResume();
 
+        NoticeDto noticeDto = noticeRepository.noticeJoinCompanySkill(id);
+
         NoticeDetailDto noticeDetailDto = new NoticeDetailDto();
-        noticeDetailDto.setNoticeDto(noticeDto);
-        noticeDetailDto.setCompanyskills(comskill);
-        noticeDetailDto.setResumeSelectList(resumeSelectList);
+
+        noticeDetailDto.setNoticeDetailDto(noticeDto);
+        noticeDetailDto.setResumeSelect(resumeSelectList);
+
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeDetailDto), HttpStatus.OK);
     }
 

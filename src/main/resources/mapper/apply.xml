@@ -58,7 +58,7 @@
 
     <select id="findByUserSkill" resultType="java.lang.String">
       select userskill_name from userskill_tb where user_id = #{userId}
-   </select>
+    </select>
 
 
 </mapper>
