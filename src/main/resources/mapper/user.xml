@@ -4,12 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="shop.mtcoding.pickme.model.UserRepository">
-    <select id="findUserList" resultType="shop.mtcoding.pickme.dto.user.UserResp$UserListRespDto">
-        SELECT rt.id, rt.resume_username, rt.resume_career, rt.resume_grade, ut.user_profile
+
+<resultMap id="UserListRespDto" type="shop.mtcoding.pickme.dto.user.UserListRespDto">
+        <id property="id" column="id"/>                  
+        <result property="resumeUsername" column="resume_username"/>
+        <result property="resumeCareer" column="resume_career"/>
+        <result property="resumeGrade" column="resume_grade"/>
+        <association property="userProfile" javaType="shop.mtcoding.pickme.dto.user.UserListRespDto$UserProfileDto">
+            <id property="id" column="id"/>                    
+            <result property="userProfile" column="user_profile"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserList" resultMap="UserListRespDto">
+        SELECT *
         FROM resume_tb rt
-        JOIN user_tb ut
+        INNER JOIN user_tb ut
         ON rt.user_id = ut.id;
-    </select>  
+    </select> 
 
     <select id="findByUsername" resultType="shop.mtcoding.pickme.model.User">
         select * from user_tb where user_name = #{userName}

@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 

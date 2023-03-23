@@ -17,19 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeTempRespDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2.UserskillDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.ResumeRepository;
 import shop.mtcoding.pickme.model.User;
-import shop.mtcoding.pickme.model.Userskill;
 import shop.mtcoding.pickme.model.UserskillRepository;
 import shop.mtcoding.pickme.service.ResumeService;
 
@@ -189,20 +186,13 @@ public class ResumeController {
 
         List<UserskillDto> userskillDto = userskillRepository.findByResumeId(id);
 
-
-        
         ResumeDetailRespDtoV2 resumeDetailRespDtoV2 = ResumeDetailRespDtoV2.ofResumeDetailRespDtoV2(resumeDto);
-        resumeDetailRespDtoV2.setUserSkills(userskillDto);  
-        
+        resumeDetailRespDtoV2.setUserSkills(userskillDto);
+
         System.out.println("테스트ttt : " + resumeDetailRespDtoV2.getResumeEmail());
         System.out.println("테스트ttt : " + resumeDetailRespDtoV2.getUserSkills().size());
-        
-        
-
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", resumeDetailRespDtoV2), HttpStatus.OK);
-
-        
 
     }
 

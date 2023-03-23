@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shop.mtcoding.pickme.dto.user.UserResp.UserListRespDto;
+import shop.mtcoding.pickme.dto.user.UserListRespDto;
 
 @Transactional
 @MybatisTest

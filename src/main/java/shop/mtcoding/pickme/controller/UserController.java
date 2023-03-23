@@ -20,11 +20,11 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
+import shop.mtcoding.pickme.dto.user.UserListRespDto;
 import shop.mtcoding.pickme.dto.user.UserMyPageDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserMyPageReqDto;
-import shop.mtcoding.pickme.dto.user.UserResp.UserListRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.CompanyRepository;
@@ -119,7 +119,6 @@ public class UserController {
      */
     @GetMapping("/user/userSkillMatchForm")
     public ResponseEntity<?> userSkillMatchForm(@RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
-        User principal = (User) session.getAttribute("userPrincipal");
         // if (principal == null) {
         // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         // }
