@@ -3,7 +3,6 @@ package shop.mtcoding.pickme.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
@@ -41,7 +41,7 @@ public class CompanyController {
     private final CompanyRepository companyRepository;
 
     @PostMapping("/companyJoin")
-    public ResponseEntity<?> companyJoin(@RequestBody @Valid CompanyJoinReqDto companyJoinReqDto) {
+    public ResponseEntity<?> companyJoin(@RequestBody @Validation CompanyJoinReqDto companyJoinReqDto) {
 
         companyService.기업회원가입(companyJoinReqDto);
 
@@ -49,7 +49,7 @@ public class CompanyController {
     }
 
     @PostMapping("/companylogin")
-    public ResponseEntity<?> companylogin(@RequestBody @Valid CompanyLoginReqDto companyLoginReqDto) {
+    public ResponseEntity<?> companylogin(@RequestBody @Validation CompanyLoginReqDto companyLoginReqDto) {
 
         Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
         session.setAttribute("comPrincipal", comPrincipal);
@@ -84,7 +84,7 @@ public class CompanyController {
 
     @PutMapping("/company/{id}")
     public @ResponseBody ResponseEntity<?> update(@PathVariable int id,
-            @RequestBody @Valid CompanyMypageReqDto companyMypageReqDto) {
+            @RequestBody @Validation CompanyMypageReqDto companyMypageReqDto) {
         Company comprincipal = (Company) session.getAttribute("comPrincipal");
         if (comprincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);

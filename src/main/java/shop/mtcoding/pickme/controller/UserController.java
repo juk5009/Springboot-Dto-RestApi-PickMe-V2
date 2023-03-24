@@ -3,7 +3,6 @@ package shop.mtcoding.pickme.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
@@ -27,7 +27,6 @@ import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserMyPageReqDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
-import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.CompanyRepository;
 import shop.mtcoding.pickme.model.Companyskill;
 import shop.mtcoding.pickme.model.CompanyskillRepository;
@@ -59,7 +58,7 @@ public class UserController {
 
     @PutMapping("/user/{id}")
     public @ResponseBody ResponseEntity<?> MyPage(@PathVariable int id,
-            @RequestBody @Valid UserMyPageReqDto userMyPageReqDto) {
+            @RequestBody @Validation UserMyPageReqDto userMyPageReqDto) {
         User principal = (User) session.getAttribute("userPrincipal");
         if (principal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
@@ -71,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/userJoin")
-    public @ResponseBody ResponseEntity<?> join(@RequestBody @Valid UserJoinReqDto userJoinReqDto) {
+    public @ResponseBody ResponseEntity<?> join(@RequestBody @Validation UserJoinReqDto userJoinReqDto) {
 
         userService.회원가입(userJoinReqDto);
 
@@ -84,7 +83,7 @@ public class UserController {
     }
 
     @PostMapping("/userlogin")
-    public ResponseEntity<?> userlogin(@RequestBody @Valid UserLoginReqDto userLoginReqDto) {
+    public ResponseEntity<?> userlogin(@RequestBody @Validation UserLoginReqDto userLoginReqDto) {
 
         User userPrincipal = userService.유저로그인(userLoginReqDto);
         session.setAttribute("userPrincipal", userPrincipal);

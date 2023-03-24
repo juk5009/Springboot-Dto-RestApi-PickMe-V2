@@ -3,7 +3,6 @@ package shop.mtcoding.pickme.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDto;
@@ -41,7 +41,7 @@ public class NoticeController {
     private final NoticeRepository noticeRepository;
 
     @PostMapping("/saveNotice")
-    public @ResponseBody ResponseEntity<?> saveNotice(@RequestBody @Valid NoticeSaveReqDto noticeSaveReqDto) {
+    public @ResponseBody ResponseEntity<?> saveNotice(@RequestBody @Validation NoticeSaveReqDto noticeSaveReqDto) {
         String comSkill = noticeSaveReqDto.getCompanyskillList();
 
         Company comPrincipal = (Company) session.getAttribute("comPrincipal");
@@ -55,7 +55,7 @@ public class NoticeController {
 
     @PutMapping("/notice/{id}")
     public @ResponseBody ResponseEntity<?> updateNotice(@PathVariable int id,
-            @RequestBody @Valid NoticeUpdateReqDto noticeUpdateReqDto) {
+            @RequestBody @Validation NoticeUpdateReqDto noticeUpdateReqDto) {
         String comSkill = noticeUpdateReqDto.getCompanyskillList();
 
         Company comPrincipal = (Company) session.getAttribute("comPrincipal");
