@@ -61,7 +61,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public Company 유저프로필사진수정(MultipartFile companyProfile, Integer comPrincipalId) {
+    public Company 회사프로필사진수정(MultipartFile companyProfile, Integer comPrincipalId) {
         String uuidImageName = PathUtil.writeImageFile(companyProfile);
 
         Company comPS = companyRepository.findById(comPrincipalId);
