@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
-import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
 import shop.mtcoding.pickme.model.ResumeRepository;
@@ -37,53 +37,12 @@ public class ResumeController {
     private final HttpSession session;
 
     @PostMapping("/saveResume")
-    public @ResponseBody ResponseEntity<?> saveResume(@RequestBody ResumeSaveReqDto resumeSaveReqDto) {
+    public @ResponseBody ResponseEntity<?> saveResume(@RequestBody @Validation ResumeSaveReqDto resumeSaveReqDto) {
         String usSkill = resumeSaveReqDto.getUserskillList();
 
         User userPrincipal = (User) session.getAttribute("userPrincipal");
         if (userPrincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-
-        if (resumeSaveReqDto.getResumeUsername() == null ||
-                resumeSaveReqDto.getResumeUsername().isEmpty()) {
-            throw new CustomApiException("이름을 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeBirth() == null ||
-                resumeSaveReqDto.getResumeBirth().isEmpty()) {
-            throw new CustomApiException("생년월일을 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeEmail() == null ||
-                resumeSaveReqDto.getResumeEmail().isEmpty()) {
-            throw new CustomApiException("email 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeAddress() == null ||
-                resumeSaveReqDto.getResumeAddress().isEmpty()) {
-            throw new CustomApiException("주소를 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeCareer() == null ||
-                resumeSaveReqDto.getResumeCareer().isEmpty()) {
-            throw new CustomApiException("경력를 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeLocation() == null ||
-                resumeSaveReqDto.getResumeLocation().isEmpty()) {
-            throw new CustomApiException("지역을 선택해주세요");
-        }
-        if (resumeSaveReqDto.getResumeGrade() == null ||
-                resumeSaveReqDto.getResumeGrade().isEmpty()) {
-            throw new CustomApiException("학력을 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumePhoneNumber() == null ||
-                resumeSaveReqDto.getResumePhoneNumber().isEmpty()) {
-            throw new CustomApiException("전화번호를 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeSex() == null ||
-                resumeSaveReqDto.getResumeSex().isEmpty()) {
-            throw new CustomApiException("성별을 작성해주세요");
-        }
-        if (resumeSaveReqDto.getResumeContent() == null ||
-                resumeSaveReqDto.getResumeContent().isEmpty()) {
-            throw new CustomApiException("자기소개서를 작성해주세요");
         }
 
         resumeService.이력서작성(resumeSaveReqDto, userPrincipal.getId(), usSkill);
@@ -92,52 +51,12 @@ public class ResumeController {
 
     @PutMapping("/resume/{id}")
     public @ResponseBody ResponseEntity<?> updateNotice(@PathVariable int id,
-            @RequestBody ResumeUpdateReqDto resumeUpdateReqDto) {
+            @RequestBody @Validation ResumeUpdateReqDto resumeUpdateReqDto) {
         String usSkill = resumeUpdateReqDto.getUserskillList();
 
         User userPrincipal = (User) session.getAttribute("userPrincipal");
         if (userPrincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-        if (resumeUpdateReqDto.getResumeUsername() == null ||
-                resumeUpdateReqDto.getResumeUsername().isEmpty()) {
-            throw new CustomApiException("이름을 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeBirth() == null ||
-                resumeUpdateReqDto.getResumeBirth().isEmpty()) {
-            throw new CustomApiException("생년월일을 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeEmail() == null ||
-                resumeUpdateReqDto.getResumeEmail().isEmpty()) {
-            throw new CustomApiException("email 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeAddress() == null ||
-                resumeUpdateReqDto.getResumeAddress().isEmpty()) {
-            throw new CustomApiException("주소를 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeCareer() == null ||
-                resumeUpdateReqDto.getResumeCareer().isEmpty()) {
-            throw new CustomApiException("경력사항을 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeLocation() == null ||
-                resumeUpdateReqDto.getResumeLocation().isEmpty()) {
-            throw new CustomApiException("지역을 선택해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeGrade() == null ||
-                resumeUpdateReqDto.getResumeGrade().isEmpty()) {
-            throw new CustomApiException("학력을 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumePhoneNumber() == null ||
-                resumeUpdateReqDto.getResumePhoneNumber().isEmpty()) {
-            throw new CustomApiException("전화번호를 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeSex() == null ||
-                resumeUpdateReqDto.getResumeSex().isEmpty()) {
-            throw new CustomApiException("성별을 작성해주세요");
-        }
-        if (resumeUpdateReqDto.getResumeContent() == null ||
-                resumeUpdateReqDto.getResumeContent().isEmpty()) {
-            throw new CustomApiException("자기소개서를 작성해주세요");
         }
 
         resumeService.이력서수정(id, resumeUpdateReqDto, userPrincipal.getId(), usSkill);

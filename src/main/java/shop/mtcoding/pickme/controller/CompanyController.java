@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
@@ -40,33 +41,16 @@ public class CompanyController {
     private final CompanyRepository companyRepository;
 
     @PostMapping("/companyJoin")
-    public ResponseEntity<?> companyJoin(@RequestBody CompanyJoinReqDto companyJoinReqDto) {
-        if (companyJoinReqDto.getCompanyName() == null ||
-                companyJoinReqDto.getCompanyName().isEmpty()) {
-            throw new CustomException("CompanyName을 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        if (companyJoinReqDto.getCompanyPassword() == null ||
-                companyJoinReqDto.getCompanyPassword().isEmpty()) {
-            throw new CustomException("CompanyPassword을 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        if (companyJoinReqDto.getCompanyEmail() == null ||
-                companyJoinReqDto.getCompanyEmail().isEmpty()) {
-            throw new CustomException("CompanyEmail입력해주세요", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> companyJoin(@RequestBody @Validation CompanyJoinReqDto companyJoinReqDto) {
 
         companyService.기업회원가입(companyJoinReqDto);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyJoinReqDto), HttpStatus.OK);
     }
 
     @PostMapping("/companylogin")
-    public ResponseEntity<?> companylogin(@RequestBody CompanyLoginReqDto companyLoginReqDto) {
-        if (companyLoginReqDto.getCompanyName() == null || companyLoginReqDto.getCompanyName().isEmpty()) {
-            throw new CustomException("CompanyName을 작성해주세요");
-        }
-        if (companyLoginReqDto.getCompanyPassword() == null || companyLoginReqDto.getCompanyPassword().isEmpty()) {
-            throw new CustomException("CompanyPassword을 작성해주세요");
-        }
+    public ResponseEntity<?> companylogin(@RequestBody @Validation CompanyLoginReqDto companyLoginReqDto) {
+
         Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
         session.setAttribute("comPrincipal", comPrincipal);
         return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", null), HttpStatus.OK);
@@ -100,20 +84,12 @@ public class CompanyController {
 
     @PutMapping("/company/{id}")
     public @ResponseBody ResponseEntity<?> update(@PathVariable int id,
-            @RequestBody CompanyMypageReqDto companyMypageReqDto) {
+            @RequestBody @Validation CompanyMypageReqDto companyMypageReqDto) {
         Company comprincipal = (Company) session.getAttribute("comPrincipal");
         if (comprincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         }
-        if (companyMypageReqDto.getCompanyName() == null || companyMypageReqDto.getCompanyName().isEmpty()) {
-            throw new CustomApiException("CompanyName을 작성해주세요");
-        }
-        if (companyMypageReqDto.getCompanyPassword() == null || companyMypageReqDto.getCompanyPassword().isEmpty()) {
-            throw new CustomApiException("CompanyPassword를 작성해주세요");
-        }
-        if (companyMypageReqDto.getCompanyEmail() == null || companyMypageReqDto.getCompanyEmail().isEmpty()) {
-            throw new CustomApiException("CompanyEmail을 작성해주세요");
-        }
+
         companyService.기업정보수정(id, companyMypageReqDto, comprincipal.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "기업정보수정성공", null), HttpStatus.OK);
     }
@@ -128,7 +104,7 @@ public class CompanyController {
         if (companyProfile.isEmpty()) {
             throw new CustomException("사진이 전송되지 않았습니다");
         }
-        Company comPS = companyService.유저프로필사진수정(companyProfile, 1);
+        Company comPS = companyService.회사프로필사진수정(companyProfile, 1);
         session.setAttribute("comPrincipal", comPS);
 
         return ResponseEntity.ok().build();

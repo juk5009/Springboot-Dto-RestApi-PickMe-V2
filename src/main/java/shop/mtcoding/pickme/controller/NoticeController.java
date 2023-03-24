@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDto;
@@ -40,36 +41,12 @@ public class NoticeController {
     private final NoticeRepository noticeRepository;
 
     @PostMapping("/saveNotice")
-    public @ResponseBody ResponseEntity<?> saveNotice(@RequestBody NoticeSaveReqDto noticeSaveReqDto) {
+    public @ResponseBody ResponseEntity<?> saveNotice(@RequestBody @Validation NoticeSaveReqDto noticeSaveReqDto) {
         String comSkill = noticeSaveReqDto.getCompanyskillList();
 
         Company comPrincipal = (Company) session.getAttribute("comPrincipal");
         if (comPrincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-        if (noticeSaveReqDto.getNoticeTitle() == null || noticeSaveReqDto.getNoticeTitle().isEmpty()) {
-            throw new CustomApiException("제목을 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeCompanyname() == null || noticeSaveReqDto.getNoticeCompanyname().isEmpty()) {
-            throw new CustomApiException("회사 이름을 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeCareer() == null || noticeSaveReqDto.getNoticeCareer().isEmpty()) {
-            throw new CustomApiException("경력을 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticePay() == null || noticeSaveReqDto.getNoticePay().isEmpty()) {
-            throw new CustomApiException("급여를 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeEmploytype() == null || noticeSaveReqDto.getNoticeEmploytype().isEmpty()) {
-            throw new CustomApiException("근무형태를 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeGrade() == null || noticeSaveReqDto.getNoticeGrade().isEmpty()) {
-            throw new CustomApiException("학력을 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeLocation() == null || noticeSaveReqDto.getNoticeLocation().isEmpty()) {
-            throw new CustomApiException("근무지역을 작성해주세요");
-        }
-        if (noticeSaveReqDto.getNoticeContent() == null || noticeSaveReqDto.getNoticeContent().isEmpty()) {
-            throw new CustomApiException("내용을 작성해주세요");
         }
 
         noticeService.공고작성(noticeSaveReqDto, comPrincipal.getId(), comSkill);
@@ -78,36 +55,12 @@ public class NoticeController {
 
     @PutMapping("/notice/{id}")
     public @ResponseBody ResponseEntity<?> updateNotice(@PathVariable int id,
-            @RequestBody NoticeUpdateReqDto noticeUpdateReqDto) {
+            @RequestBody @Validation NoticeUpdateReqDto noticeUpdateReqDto) {
         String comSkill = noticeUpdateReqDto.getCompanyskillList();
 
         Company comPrincipal = (Company) session.getAttribute("comPrincipal");
         if (comPrincipal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-        if (noticeUpdateReqDto.getNoticeTitle() == null || noticeUpdateReqDto.getNoticeTitle().isEmpty()) {
-            throw new CustomApiException("제목을 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeCompanyname() == null || noticeUpdateReqDto.getNoticeCompanyname().isEmpty()) {
-            throw new CustomApiException("회사 이름을 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeCareer() == null || noticeUpdateReqDto.getNoticeCareer().isEmpty()) {
-            throw new CustomApiException("경력을 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticePay() == null || noticeUpdateReqDto.getNoticePay().isEmpty()) {
-            throw new CustomApiException("급여를 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeEmploytype() == null || noticeUpdateReqDto.getNoticeEmploytype().isEmpty()) {
-            throw new CustomApiException("근무형태를 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeGrade() == null || noticeUpdateReqDto.getNoticeGrade().isEmpty()) {
-            throw new CustomApiException("학력을 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeLocation() == null || noticeUpdateReqDto.getNoticeLocation().isEmpty()) {
-            throw new CustomApiException("근무지역을 작성해주세요");
-        }
-        if (noticeUpdateReqDto.getNoticeContent() == null || noticeUpdateReqDto.getNoticeContent().isEmpty()) {
-            throw new CustomApiException("내용을 작성해주세요");
         }
 
         noticeService.공고수정(id, noticeUpdateReqDto, comPrincipal.getId(), comSkill);
