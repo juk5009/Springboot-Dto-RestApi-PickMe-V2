@@ -45,7 +45,7 @@ public class CompanyController {
 
         companyService.기업회원가입(companyJoinReqDto);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyJoinReqDto), HttpStatus.OK);
     }
 
     @PostMapping("/companylogin")

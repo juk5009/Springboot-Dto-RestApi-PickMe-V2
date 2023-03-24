@@ -3,6 +3,7 @@ package shop.mtcoding.pickme.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,39 +59,42 @@ public class UserController {
 
     @PutMapping("/user/{id}")
     public @ResponseBody ResponseEntity<?> MyPage(@PathVariable int id,
-            @RequestBody UserMyPageReqDto userMyPageReqDto) {
+            @RequestBody @Valid UserMyPageReqDto userMyPageReqDto) {
         User principal = (User) session.getAttribute("userPrincipal");
         if (principal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         }
-        if (userMyPageReqDto.getUserName() == null || userMyPageReqDto.getUserName().isEmpty()) {
-            throw new CustomApiException("UserName을 작성해주세요");
-        }
-        if (userMyPageReqDto.getUserPassword() == null || userMyPageReqDto.getUserPassword().isEmpty()) {
-            throw new CustomApiException("UserPassword를 작성해주세요");
-        }
-        if (userMyPageReqDto.getUserEmail() == null || userMyPageReqDto.getUserEmail().isEmpty()) {
-            throw new CustomApiException("UserEmail 작성해주세요");
-        }
+        // if (userMyPageReqDto.getUserName() == null ||
+        // userMyPageReqDto.getUserName().isEmpty()) {
+        // throw new CustomApiException("UserName을 작성해주세요");
+        // }
+        // if (userMyPageReqDto.getUserPassword() == null ||
+        // userMyPageReqDto.getUserPassword().isEmpty()) {
+        // throw new CustomApiException("UserPassword를 작성해주세요");
+        // }
+        // if (userMyPageReqDto.getUserEmail() == null ||
+        // userMyPageReqDto.getUserEmail().isEmpty()) {
+        // throw new CustomApiException("UserEmail 작성해주세요");
+        // }
         userService.회원정보수정(id, userMyPageReqDto, principal.getId());
 
         return new ResponseEntity<>(new ResponseDto<>(1, "정보수정완료", null), HttpStatus.OK);
     }
 
     @PostMapping("/userJoin")
-    public @ResponseBody ResponseEntity<?> join(@RequestBody UserJoinReqDto userJoinReqDto) {
-        if (userJoinReqDto.getUserName() == null ||
-                userJoinReqDto.getUserName().isEmpty()) {
-            throw new CustomException("userName를 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        if (userJoinReqDto.getUserPassword() == null ||
-                userJoinReqDto.getUserPassword().isEmpty()) {
-            throw new CustomException("userPassword 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        if (userJoinReqDto.getUserEmail() == null ||
-                userJoinReqDto.getUserEmail().isEmpty()) {
-            throw new CustomException("userEmail 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
+    public @ResponseBody ResponseEntity<?> join(@RequestBody @Valid UserJoinReqDto userJoinReqDto) {
+        // if (userJoinReqDto.getUserName() == null ||
+        // userJoinReqDto.getUserName().isEmpty()) {
+        // throw new CustomException("userName를 입력해주세요", HttpStatus.BAD_REQUEST);
+        // }
+        // if (userJoinReqDto.getUserPassword() == null ||
+        // userJoinReqDto.getUserPassword().isEmpty()) {
+        // throw new CustomException("userPassword 입력해주세요", HttpStatus.BAD_REQUEST);
+        // }
+        // if (userJoinReqDto.getUserEmail() == null ||
+        // userJoinReqDto.getUserEmail().isEmpty()) {
+        // throw new CustomException("userEmail 입력해주세요", HttpStatus.BAD_REQUEST);
+        // }
         userService.회원가입(userJoinReqDto);
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);
@@ -102,16 +106,18 @@ public class UserController {
     }
 
     @PostMapping("/userlogin")
-    public ResponseEntity<?> userlogin(@RequestBody UserLoginReqDto userLoginReqDto) {
-        if (userLoginReqDto.getUserName() == null || userLoginReqDto.getUserName().isEmpty()) {
-            throw new CustomException("userName를 작성해주세요");
-        }
-        if (userLoginReqDto.getUserPassword() == null || userLoginReqDto.getUserPassword().isEmpty()) {
-            throw new CustomException("userPassword를 작성해주세요");
-        }
+    public ResponseEntity<?> userlogin(@RequestBody @Valid UserLoginReqDto userLoginReqDto) {
+        // if (userLoginReqDto.getUserName() == null ||
+        // userLoginReqDto.getUserName().isEmpty()) {
+        // throw new CustomException("userName를 작성해주세요");
+        // }
+        // if (userLoginReqDto.getUserPassword() == null ||
+        // userLoginReqDto.getUserPassword().isEmpty()) {
+        // throw new CustomException("userPassword를 작성해주세요");
+        // }
         User userPrincipal = userService.유저로그인(userLoginReqDto);
         session.setAttribute("userPrincipal", userPrincipal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPrincipal), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);
     }
 
     /*

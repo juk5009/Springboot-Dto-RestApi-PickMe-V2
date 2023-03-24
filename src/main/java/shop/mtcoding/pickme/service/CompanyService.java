@@ -32,6 +32,7 @@ public class CompanyService {
         if (result != 1) {
             throw new CustomException("회원가입실패");
         }
+
     }
 
     @Transactional
