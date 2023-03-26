@@ -10,6 +10,6 @@ public class CompanyResp {
     public static class CompanyListRespDto {
         private int id;
         private String noticeCompanyname;
-
     }
+
 }

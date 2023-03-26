@@ -18,7 +18,6 @@ public class CompanyReq {
         private String companyName;
         private String companyPassword;
         private String companyEmail;
-
     }
 
     @Setter

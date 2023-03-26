@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.pickme.dto.company.CompanyJoinRespDto;
+import shop.mtcoding.pickme.dto.company.CompanyMypageRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -23,7 +25,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     @Transactional
-    public void 기업회원가입(CompanyJoinReqDto companyJoinReqDto) {
+    public CompanyJoinRespDto 기업회원가입(CompanyJoinReqDto companyJoinReqDto) {
         Company CompanyUser = companyRepository.findByCompanyname(companyJoinReqDto.getCompanyName());
         if (CompanyUser != null) {
             throw new CustomException("동일한 companyname이 존재합니다");
@@ -32,6 +34,13 @@ public class CompanyService {
         if (result != 1) {
             throw new CustomException("회원가입실패");
         }
+
+        Company company = companyRepository.findByCompanyname(companyJoinReqDto.getCompanyName());
+        CompanyJoinRespDto companyjoin = new CompanyJoinRespDto();
+        companyjoin.setCompanyName(company.getCompanyName());
+        companyjoin.setCompanyPassword(company.getCompanyPassword());
+        companyjoin.setCompanyEmail(company.getCompanyEmail());
+        return companyjoin;
     }
 
     @Transactional
@@ -44,12 +53,12 @@ public class CompanyService {
     }
 
     @Transactional
-    public void 기업정보수정(int id, CompanyMypageReqDto companyMypageReqDto, Integer comprincipalId) {
-        Company companyPS = companyRepository.findById(id);
-        if (companyPS == null) {
+    public CompanyMypageRespDto 기업정보수정(int id, CompanyMypageReqDto companyMypageReqDto, Integer comprincipalId) {
+        Company updatedCompany = companyRepository.findById(id);
+        if (updatedCompany == null) {
             throw new CustomApiException("해당 기업정보를 찾을 수 없습니다");
         }
-        if (companyPS.getId() != comprincipalId) {
+        if (updatedCompany.getId() != comprincipalId) {
             throw new CustomApiException("기업정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
         }
         int result = companyRepository.updateById(id, companyMypageReqDto.getCompanyName(),
@@ -57,7 +66,9 @@ public class CompanyService {
         if (result != 1) {
             throw new CustomApiException("기업정보 수정에 실패하였습니다", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
+        updatedCompany = companyRepository.findById(id);
+        return new CompanyMypageRespDto(updatedCompany.getCompanyName(), updatedCompany.getCompanyPassword(),
+                updatedCompany.getCompanyEmail());
     }
 
     @Transactional

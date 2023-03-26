@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.ResponseDto;
+import shop.mtcoding.pickme.dto.company.CompanyJoinRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
+import shop.mtcoding.pickme.dto.company.CompanyMypageRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -40,7 +42,8 @@ public class CompanyController {
     private final CompanyRepository companyRepository;
 
     @PostMapping("/companyJoin")
-    public ResponseEntity<?> companyJoin(@RequestBody CompanyJoinReqDto companyJoinReqDto) {
+    public ResponseEntity<ResponseDto<CompanyJoinRespDto>> companyJoin(
+            @RequestBody CompanyJoinReqDto companyJoinReqDto) {
         if (companyJoinReqDto.getCompanyName() == null ||
                 companyJoinReqDto.getCompanyName().isEmpty()) {
             throw new CustomException("CompanyName을 입력해주세요", HttpStatus.BAD_REQUEST);
@@ -54,9 +57,9 @@ public class CompanyController {
             throw new CustomException("CompanyEmail입력해주세요", HttpStatus.BAD_REQUEST);
         }
 
-        companyService.기업회원가입(companyJoinReqDto);
+        CompanyJoinRespDto companyjoin = companyService.기업회원가입(companyJoinReqDto);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyjoin), HttpStatus.OK);
     }
 
     @PostMapping("/companylogin")
@@ -69,7 +72,7 @@ public class CompanyController {
         }
         Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
         session.setAttribute("comPrincipal", comPrincipal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", comPrincipal), HttpStatus.OK);
     }
 
     @GetMapping("/companyJoinForm")
@@ -101,10 +104,10 @@ public class CompanyController {
     @PutMapping("/company/{id}")
     public @ResponseBody ResponseEntity<?> update(@PathVariable int id,
             @RequestBody CompanyMypageReqDto companyMypageReqDto) {
-        Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        if (comprincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
+        // if (comprincipal == null) {
+        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
         if (companyMypageReqDto.getCompanyName() == null || companyMypageReqDto.getCompanyName().isEmpty()) {
             throw new CustomApiException("CompanyName을 작성해주세요");
         }
@@ -114,8 +117,8 @@ public class CompanyController {
         if (companyMypageReqDto.getCompanyEmail() == null || companyMypageReqDto.getCompanyEmail().isEmpty()) {
             throw new CustomApiException("CompanyEmail을 작성해주세요");
         }
-        companyService.기업정보수정(id, companyMypageReqDto, comprincipal.getId());
-        return new ResponseEntity<>(new ResponseDto<>(1, "기업정보수정성공", null), HttpStatus.OK);
+        CompanyMypageRespDto companymypage = companyService.기업정보수정(id, companyMypageReqDto, 1);
+        return new ResponseEntity<>(new ResponseDto<>(1, "기업정보수정성공", companymypage), HttpStatus.OK);
     }
 
     @PostMapping("/company/companyProfileUpdate")

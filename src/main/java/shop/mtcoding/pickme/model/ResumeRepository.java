@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeDetailRespDtoV2;
-import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 
 @Mapper
@@ -18,7 +17,7 @@ public interface ResumeRepository {
 
         public List<Resume> findAll();
 
-        public ResumeUpdateRespDto findById(int id);
+        public Resume findById(int id);
 
         public User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 

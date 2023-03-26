@@ -84,7 +84,7 @@
         select * from resume_tb
     </select>
 
-    <select id="findById" resultType="shop.mtcoding.pickme.dto.resume.ResumeRespDto$ResumeUpdateRespDto">
+    <select id="findById" resultType="shop.mtcoding.pickme.model.Resume">
         select * from resume_tb where id = #{id}
     </select>   
 
