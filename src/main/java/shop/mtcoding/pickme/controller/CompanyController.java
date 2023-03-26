@@ -101,17 +101,16 @@ public class CompanyController {
     // 프로필 업데이트
     @PostMapping("/company/companyProfileUpdate")
     public ResponseEntity<?> companyProfileUpdate(@RequestBody CompanyProfileReqDto companyProfileReqDto) {
-        System.out.println(companyProfileReqDto.getCompanyProfile().substring(0, 20));
-        // Company comPrincipal = (Company) session.getAttribute("comPrincipal");
-        // if (comPrincipal == null) {
-        // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        // }
-        // if (companyProfileReqDto.getCompanyProfile().isEmpty()) {
-        // throw new CustomException("사진이 전송되지 않았습니다");
-        // }
+        Company comPrincipal = (Company) session.getAttribute("comPrincipal");
+        if (comPrincipal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if (companyProfileReqDto.getCompanyProfile().isEmpty()) {
+            throw new CustomException("사진이 전송되지 않았습니다");
+        }
 
-        Company comPS = companyService.회사프로필사진수정(companyProfileReqDto, 1);
-        // session.setAttribute("comPrincipal", comPS);
+        Company comPS = companyService.회사프로필사진수정(companyProfileReqDto, comPrincipal.getId());
+        session.setAttribute("comPrincipal", comPS);
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", comPS),
                 HttpStatus.OK);

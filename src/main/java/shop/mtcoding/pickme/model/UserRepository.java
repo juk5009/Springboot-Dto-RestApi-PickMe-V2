@@ -29,9 +29,7 @@ public interface UserRepository {
         public User findByUsernameAndPassword(@Param("userName") String userName,
                         @Param("userPassword") String userPassword);
 
-        public int updateUserProfile(@Param("id") int id, @Param("userName") String userName,
-                        @Param("userPassword") String userPassword, @Param("userEmail") String userEmail,
-                        @Param("userProfile") String userProfile);
+        public int updateUserProfile(@Param("id") int id, @Param("userProfile") String userProfile);
 
         public UserMyPageDto userJoinResume(int id);
 

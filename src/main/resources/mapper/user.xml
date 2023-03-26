@@ -75,7 +75,7 @@
     </select> 
 
     <update id="updateUserProfile">
-          update user_tb set user_name= #{userName},user_password= #{userPassword}, user_email= #{userEmail} ,user_profile = #{userProfile} where id = #{id} 
+          update user_tb set user_profile = #{userProfile} where id = #{id} 
     </update>
 
 </mapper>
