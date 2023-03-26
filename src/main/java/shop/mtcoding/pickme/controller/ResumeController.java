@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.config.annotation.Validation;
+import shop.mtcoding.pickme.config.auth.LoginUser;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
@@ -41,13 +42,9 @@ public class ResumeController {
     @PostMapping("/saveResume")
     public @ResponseBody ResponseEntity<?> saveResume(@RequestBody @Validation ResumeSaveReqDto resumeSaveReqDto) {
         String usSkill = resumeSaveReqDto.getUserskillList();
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
 
-        // User userPrincipal = (User) session.getAttribute("userPrincipal");
-        // if (userPrincipal == null) {
-        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-
-        ResumeSaveRespDto resumesave = resumeService.이력서작성(resumeSaveReqDto, 1, usSkill);
+        ResumeSaveRespDto resumesave = resumeService.이력서작성(resumeSaveReqDto, loginUser.getId(), usSkill);
         return new ResponseEntity<>(new ResponseDto<>(1, "이력서 작성 성공", resumesave), HttpStatus.CREATED);
     }
 
@@ -55,25 +52,17 @@ public class ResumeController {
     public @ResponseBody ResponseEntity<?> updateNotice(@PathVariable int id,
             @RequestBody @Validation ResumeUpdateReqDto resumeUpdateReqDto) {
         String usSkill = resumeUpdateReqDto.getUserskillList();
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
 
-        // User userPrincipal = (User) session.getAttribute("userPrincipal");
-        // if (userPrincipal == null) {
-        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-
-        ResumeUpdateRespDto resumeupdate = resumeService.이력서수정(id, resumeUpdateReqDto, 1, usSkill);
+        ResumeUpdateRespDto resumeupdate = resumeService.이력서수정(id, resumeUpdateReqDto, loginUser.getId(), usSkill);
 
         return new ResponseEntity<>(new ResponseDto<>(1, "이력서 수정 완료", resumeupdate), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/resume/{id}")
     public @ResponseBody ResponseEntity<?> deleteResume(@PathVariable int id) {
-
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-        resumeService.이력서삭제(id, userPrincipal.getId());
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
+        resumeService.이력서삭제(id, loginUser.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "이력서 삭제 완료", null), HttpStatus.OK);
 
     }

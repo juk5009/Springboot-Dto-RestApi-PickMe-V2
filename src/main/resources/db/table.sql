@@ -3,7 +3,8 @@ CREATE TABLE user_tb(
 	user_name varchar not null,
 	user_password varchar not null,	
 	user_email varchar not null,
-    user_profile varchar,	
+    user_profile varchar,
+    role varchar(100),	
     created_at timestamp not null
 );
 
@@ -13,6 +14,7 @@ CREATE TABLE company_tb(
 	company_password varchar not null,	
 	company_email varchar not null,
     company_profile varchar,
+    role varchar(100),	
 	created_at timestamp not null
 );
 

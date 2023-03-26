@@ -1,6 +1,7 @@
 package shop.mtcoding.pickme.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.config.annotation.Validation;
+import shop.mtcoding.pickme.config.auth.JwtProvider;
+import shop.mtcoding.pickme.config.auth.LoginUser;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
@@ -61,35 +63,28 @@ public class UserController {
     @PutMapping("/user/{id}")
     public @ResponseBody ResponseEntity<?> MyPage(@PathVariable int id,
             @RequestBody @Validation UserMyPageReqDto userMyPageReqDto) {
-        // User principal = (User) session.getAttribute("userPrincipal");
-        // if (principal == null) {
-        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-
-        UserMyPageRespDto usermypage = userService.회원정보수정(id, userMyPageReqDto, 1);
-
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
+        UserMyPageRespDto usermypage = userService.회원정보수정(id, userMyPageReqDto, loginUser.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "정보수정완료", usermypage), HttpStatus.OK);
     }
 
-    @PostMapping("/userJoin")
+    @PostMapping("/ns/userJoin")
     public ResponseEntity<ResponseDto<UserJoinRespDto>> join(@RequestBody @Validation UserJoinReqDto userJoinReqDto) {
-
         UserJoinRespDto userjoin = userService.회원가입(userJoinReqDto);
-
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userjoin), HttpStatus.OK);
     }
 
-    @GetMapping("/loginForm")
-    public ResponseDto<?> loginForm() {
-        return new ResponseDto<>(1, "로그인 페이지 불러오기 성공", null);
-    }
+    @PostMapping("/ns/userlogin")
+    public ResponseEntity<?> userlogin(@RequestBody @Validation UserLoginReqDto userLoginReqDto, HttpSession session) {
+        Optional<User> userOptional = userRepository.findByUsernameAndPassword(
+                userLoginReqDto.getUserName(), userLoginReqDto.getUserPassword());
 
-    @PostMapping("/userlogin")
-    public ResponseEntity<?> userlogin(@RequestBody @Validation UserLoginReqDto userLoginReqDto) {
-
-        User userPrincipal = userService.유저로그인(userLoginReqDto);
-        session.setAttribute("userPrincipal", userPrincipal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPrincipal), HttpStatus.OK);
+        if (userOptional.isPresent()) { // 값이 있다면
+            String jwt = JwtProvider.create(userOptional.get());
+            return ResponseEntity.ok().header(JwtProvider.HEADER, jwt).body("로그인 성공");
+        } else {
+            return ResponseEntity.badRequest().body("로그인 실패");
+        }
     }
 
     /*
@@ -98,12 +93,10 @@ public class UserController {
      */
     @GetMapping("/user/userSkillMatchForm")
     public ResponseEntity<?> userSkillMatchForm(@RequestParam(name = "resumeId", defaultValue = "1") int resumeId) {
-        // if (principal == null) {
-        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
 
-        List<Notice> userSkillMatch = userskillRepository.findByCompanyskillName(1, resumeId);
-        List<Userskill> Uskill = userskillRepository.findByUserId(1);
+        List<Notice> userSkillMatch = userskillRepository.findByCompanyskillName(loginUser.getId(), resumeId);
+        List<Userskill> Uskill = userskillRepository.findByUserId(loginUser.getId());
 
         for (int i = 0; i < userSkillMatch.size(); i++) {// 공고문 수만큼 도는 for문
 
@@ -128,7 +121,7 @@ public class UserController {
         return new ResponseEntity<>(userSkillMatch, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/ns/main")
     public ResponseEntity<?> main() {
         List<NoticeMainRespDto> noticeMainList = noticeRepository.findMainList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeMainList), HttpStatus.OK);
@@ -140,58 +133,19 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userList), HttpStatus.OK);
     }
 
-    @GetMapping("/userJoinForm")
-    public String userJoinForm() {
-        return "user/userJoinForm";
-    }
-
-    @GetMapping("/user/resumeForm")
-    public String resumeForm() {
-        return "user/resumeForm";
-    }
-
-    @GetMapping("/user/joinType")
-    public String joinType() {
-        return "user/joinType";
-    }
-
     @GetMapping("/user/{id}/userMyPage")
     public ResponseEntity<?> MyPage(@PathVariable int id) {
-        // User principal = (User) session.getAttribute("userPrincipal");
-        // if (principal == null) {
-        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-        User userPS = userRepository.findById(1);
-        // if (userPS == null) {
-        // throw new CustomException("해당 정보를 수정할 수 없습니다");
-        // }
-        // if (userPS.getUserName() != principal.getUserName()) {
-        // throw new CustomException("해당정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
-        // }
-        List<ResumeSelectRespDto> resumeSelectList = noticeRepository.findAllWithResume();
         UserMyPageDto dto = userRepository.userJoinResume(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        session.invalidate();
-        return "redirect:/";
-    }
-
-    // 프로필 업데이트
     @PostMapping("/user/userProfileUpdate")
     public ResponseEntity<?> userProfileUpdate(@RequestBody UserProfileReqDto userProfileReqDto) {
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
-        }
+        LoginUser loginUser = (LoginUser) session.getAttribute("userPrincipal");
         if (userProfileReqDto.getUserProfile().isEmpty()) {
             return ResponseEntity.badRequest().body("사진이 전송되지 않았습니다");
         }
-
-        User userPS = userService.유저프로필사진수정(userProfileReqDto, userPrincipal.getId());
-
+        User userPS = userService.유저프로필사진수정(userProfileReqDto, loginUser.getId());
         session.setAttribute("userPrincipal", userPS.getUserProfile());
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPS), HttpStatus.OK);

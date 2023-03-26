@@ -1,6 +1,7 @@
 package shop.mtcoding.pickme.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +27,7 @@ public interface UserRepository {
 
         public User findById(int id);
 
-        public User findByUsernameAndPassword(@Param("userName") String userName,
+        public Optional<User> findByUsernameAndPassword(@Param("userName") String userName,
                         @Param("userPassword") String userPassword);
 
         public int updateUserProfile(@Param("id") int id, @Param("userProfile") String userProfile);

@@ -44,15 +44,6 @@ public class CompanyService {
     }
 
     @Transactional
-    public Company 기업로그인(CompanyLoginReqDto companyLoginReqDto) {
-        Company comPrincipal = companyRepository.findByCompanynameAndPassword(companyLoginReqDto);
-        if (comPrincipal == null) {
-            throw new CustomException("아이디 혹은 패스워드가 잘못 입력되었습니다.");
-        }
-        return comPrincipal;
-    }
-
-    @Transactional
     public CompanyMypageRespDto 기업정보수정(int id, CompanyMypageReqDto companyMypageReqDto, Integer comprincipalId) {
         Company companyPS = companyRepository.findById(id);
         if (companyPS == null) {

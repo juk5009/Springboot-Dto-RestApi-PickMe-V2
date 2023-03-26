@@ -13,5 +13,6 @@ public class Company {
     private String companyPassword;
     private String companyEmail;
     private String companyProfile;
+    private String role;
     private Timestamp createdAt;
 }
