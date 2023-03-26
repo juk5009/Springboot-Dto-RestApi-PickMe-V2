@@ -25,23 +25,12 @@ public class ApplyController {
 
     @GetMapping("/apply/applyUserList")
     public ResponseEntity<?> applyUserList() {
-        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        // if (comprincipal == null) {
-        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
         List<ApplyListRespDto> applyUserList = applyRepository.findApplyList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", applyUserList), HttpStatus.OK);
     }
 
     @GetMapping("/apply/{id}")
     public ResponseEntity<?> applyDetailForm(@PathVariable int id) {
-        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        // if (comprincipal == null) {
-        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-        // ResumeSaveReqDto resumeSaveReqDto =
-        // resumeRepository.findByUserIdWithResume(id);
-        // List<Userskill> userskill = userskillRespository.findByResumeId(id);
         ApplyDetailDto dto = applyRepository.resumeJoinUserskill(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
