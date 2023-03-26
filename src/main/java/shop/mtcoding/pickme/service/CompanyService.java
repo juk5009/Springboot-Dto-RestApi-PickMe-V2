@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.company.CompanyJoinRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageRespDto;
+import shop.mtcoding.pickme.dto.company.CompanyProfileReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -71,14 +72,14 @@ public class CompanyService {
     }
 
     @Transactional
-    public Company 회사프로필사진수정(MultipartFile companyProfile, Integer comPrincipalId) {
-        String uuidImageName = PathUtil.writeImageFile(companyProfile);
-
+    public Company 회사프로필사진수정(CompanyProfileReqDto companyProfileReqDto, Integer comPrincipalId) {
         Company comPS = companyRepository.findById(comPrincipalId);
-        comPS.setCompanyProfile(uuidImageName);
-        companyRepository.updateCompanyProfile(comPS.getId(), comPS.getCompanyName(), comPS.getCompanyPassword(),
-                comPS.getCompanyEmail(),
-                comPS.getCompanyProfile());
+
+        comPS.setCompanyProfile(companyProfileReqDto.getCompanyProfile());
+        comPS.setId(comPrincipalId);
+
+        companyRepository.updateCompanyProfile(comPS.getId(), comPS.getCompanyProfile());
+
         return comPS;
     }
 }

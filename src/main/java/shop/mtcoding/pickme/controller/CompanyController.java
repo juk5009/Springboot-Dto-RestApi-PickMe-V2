@@ -22,6 +22,7 @@ import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.company.CompanyJoinRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageRespDto;
+import shop.mtcoding.pickme.dto.company.CompanyProfileReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyJoinReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyLoginReqDto;
 import shop.mtcoding.pickme.dto.company.CompanyReq.CompanyMypageReqDto;
@@ -97,20 +98,23 @@ public class CompanyController {
         return new ResponseEntity<>(new ResponseDto<>(1, "기업정보수정성공", companymypage), HttpStatus.OK);
     }
 
+    // 프로필 업데이트
     @PostMapping("/company/companyProfileUpdate")
-    public ResponseEntity<?> companyProfileUpdate(
-            @RequestParam(value = "companyProfile") MultipartFile companyProfile) {
+    public ResponseEntity<?> companyProfileUpdate(@RequestBody CompanyProfileReqDto companyProfileReqDto) {
+        System.out.println(companyProfileReqDto.getCompanyProfile().substring(0, 20));
         // Company comPrincipal = (Company) session.getAttribute("comPrincipal");
         // if (comPrincipal == null) {
         // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         // }
-        if (companyProfile.isEmpty()) {
-            throw new CustomException("사진이 전송되지 않았습니다");
-        }
-        Company comPS = companyService.회사프로필사진수정(companyProfile, 1);
-        session.setAttribute("comPrincipal", comPS);
+        // if (companyProfileReqDto.getCompanyProfile().isEmpty()) {
+        // throw new CustomException("사진이 전송되지 않았습니다");
+        // }
 
-        return ResponseEntity.ok().build();
+        Company comPS = companyService.회사프로필사진수정(companyProfileReqDto, 1);
+        // session.setAttribute("comPrincipal", comPS);
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", comPS),
+                HttpStatus.OK);
     }
 
     @GetMapping("/company/companyList")
