@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
+import shop.mtcoding.pickme.dto.notice.NoticeSaveRespDto;
+import shop.mtcoding.pickme.dto.notice.NoticeUpdateRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.model.Companyskill;
 import shop.mtcoding.pickme.model.CompanyskillRepository;
@@ -26,7 +28,7 @@ public class NoticeService {
     private final CompanyskillRepository companyskillRepository;
 
     @Transactional
-    public void 공고작성(NoticeSaveReqDto noticeSaveReqDto, int comPrincipalId, String comSkill) {
+    public NoticeSaveRespDto 공고작성(NoticeSaveReqDto noticeSaveReqDto, int comPrincipalId, String comSkill) {
         /* 세션에 있는 id값을 set 해줌 */
         noticeSaveReqDto.setCompanyId(comPrincipalId);
 
@@ -50,12 +52,25 @@ public class NoticeService {
                     throw new CustomApiException("요구 기술작성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
-
         }
+        Notice noticeda = new Notice(noticeSaveReqDto);
+        NoticeSaveRespDto noticsave = new NoticeSaveRespDto();
+        noticsave.setCompanyId(noticeda.getCompanyId());
+        noticsave.setNoticeCompanyname(noticeda.getNoticeCompanyname());
+        noticsave.setNoticeTitle(noticeda.getNoticeTitle());
+        noticsave.setNoticeCareer(noticeda.getNoticeCareer());
+        noticsave.setNoticePay(noticeda.getNoticePay());
+        noticsave.setNoticeEmploytype(noticeda.getNoticeEmploytype());
+        noticsave.setNoticeGrade(noticeda.getNoticeGrade());
+        noticsave.setNoticeLocation(noticeda.getNoticeLocation());
+        noticsave.setNoticeContent(noticeda.getNoticeContent());
+
+        return noticsave;
     }
 
     @Transactional
-    public void 공고수정(int id, NoticeUpdateReqDto noticeUpdateReqDto, int comPrincipalId, String comSkill) {
+    public NoticeUpdateRespDto 공고수정(int id, NoticeUpdateReqDto noticeUpdateReqDto, int comPrincipalId,
+            String comSkill) {
 
         Notice noticePS = noticeRepository.findById(id);
         if (noticePS == null) {
@@ -92,6 +107,11 @@ public class NoticeService {
                 }
             }
         }
+        noticePS = noticeRepository.findById(id);
+        return new NoticeUpdateRespDto(noticePS.getCompanyId(), result, noticePS.getNoticeTitle(),
+                noticePS.getNoticeCareer(),
+                noticePS.getNoticePay(), noticePS.getNoticeEmploytype(), noticePS.getNoticeGrade(),
+                noticePS.getNoticeLocation(), noticePS.getNoticeContent(), comSkill, comSkill);
     }
 
     @Transactional

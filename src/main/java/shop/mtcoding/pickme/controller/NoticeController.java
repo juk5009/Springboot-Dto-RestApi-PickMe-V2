@@ -22,7 +22,9 @@ import shop.mtcoding.pickme.dto.notice.NoticeDetailDto;
 import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
+import shop.mtcoding.pickme.dto.notice.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeUpdateDto;
+import shop.mtcoding.pickme.dto.notice.NoticeUpdateRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
@@ -49,23 +51,23 @@ public class NoticeController {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         }
 
-        noticeService.공고작성(noticeSaveReqDto, comPrincipal.getId(), comSkill);
-        return new ResponseEntity<>(new ResponseDto<>(1, "공고 작성 완료", null), HttpStatus.CREATED);
+        NoticeSaveRespDto noticesave = noticeService.공고작성(noticeSaveReqDto, 1, comSkill);
+        return new ResponseEntity<>(new ResponseDto<>(1, "공고 작성 완료", noticesave), HttpStatus.CREATED);
     }
 
     @PutMapping("/notice/{id}")
-    public @ResponseBody ResponseEntity<?> updateNotice(@PathVariable int id,
+    public ResponseEntity<?> updateNotice(@PathVariable int id,
             @RequestBody @Validation NoticeUpdateReqDto noticeUpdateReqDto) {
         String comSkill = noticeUpdateReqDto.getCompanyskillList();
 
-        Company comPrincipal = (Company) session.getAttribute("comPrincipal");
-        if (comPrincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // Company comPrincipal = (Company) session.getAttribute("comPrincipal");
+        // if (comPrincipal == null) {
+        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
 
-        noticeService.공고수정(id, noticeUpdateReqDto, comPrincipal.getId(), comSkill);
+        NoticeUpdateRespDto noticeupdate = noticeService.공고수정(id, noticeUpdateReqDto, 1, comSkill);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "공고 수정 완료", null), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1, "공고 수정 완료", noticeupdate), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/notice/{id}")
