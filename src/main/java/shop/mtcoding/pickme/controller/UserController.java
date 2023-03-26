@@ -25,6 +25,7 @@ import shop.mtcoding.pickme.dto.user.UserJoinRespDto;
 import shop.mtcoding.pickme.dto.user.UserListRespDto;
 import shop.mtcoding.pickme.dto.user.UserMyPageDto;
 import shop.mtcoding.pickme.dto.user.UserMyPageRespDto;
+import shop.mtcoding.pickme.dto.user.UserProfileReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserMyPageReqDto;
@@ -178,22 +179,22 @@ public class UserController {
         return "redirect:/";
     }
 
+    // 프로필 업데이트
     @PostMapping("/user/userProfileUpdate")
-    public ResponseEntity<String> userProfileUpdate(MultipartFile userProfile) {
-        // User userPrincipal = (User) session.getAttribute("userPrincipal");
-        // if (userPrincipal == null) {
-        // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
-        // }
-        // if (userProfile.isEmpty()) {
-        // return ResponseEntity.badRequest().body("사진이 전송되지 않았습니다");
-        // }
-        try {
-            User userPS = userService.유저프로필사진수정(userProfile, 1);
-            session.setAttribute("userPrincipal", userPS);
-            return ResponseEntity.ok("프로필 사진이 업데이트 되었습니다");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생하였습니다");
+    public ResponseEntity<?> userProfileUpdate(@RequestBody UserProfileReqDto userProfileReqDto) {
+        User userPrincipal = (User) session.getAttribute("userPrincipal");
+        if (userPrincipal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
+        if (userProfileReqDto.getUserProfile().isEmpty()) {
+            return ResponseEntity.badRequest().body("사진이 전송되지 않았습니다");
+        }
+
+        User userPS = userService.유저프로필사진수정(userProfileReqDto, userPrincipal.getId());
+
+        session.setAttribute("userPrincipal", userPS.getUserProfile());
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPS), HttpStatus.OK);
     }
 
 }

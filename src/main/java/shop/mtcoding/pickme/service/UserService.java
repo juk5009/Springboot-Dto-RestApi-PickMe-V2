@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.user.UserJoinRespDto;
 import shop.mtcoding.pickme.dto.user.UserMyPageRespDto;
+import shop.mtcoding.pickme.dto.user.UserProfileReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserMyPageReqDto;
@@ -75,14 +76,14 @@ public class UserService {
     }
 
     @Transactional
-    public User 유저프로필사진수정(MultipartFile userProfile, Integer userPrincipalId) {
-        String uuidImageName = PathUtil.writeImageFile(userProfile);
+    public User 유저프로필사진수정(UserProfileReqDto userProfileReqDto, Integer userPrincipalId) {
 
         User userPS = userRepository.findById(userPrincipalId);
-        userPS.setUserProfile(uuidImageName);
-        userRepository.updateUserProfile(userPS.getId(), userPS.getUserName(), userPS.getUserPassword(),
-                userPS.getUserEmail(),
-                userPS.getUserProfile());
+        userPS.setUserProfile(userProfileReqDto.getUserProfile());
+        userPS.setId(userPrincipalId);
+
+        userRepository.updateUserProfile(userPS.getId(), userPS.getUserProfile());
+
         return userPS;
     }
 }

@@ -47,4 +47,6 @@
     <delete id="deleteByResumeId" >
         delete from userskill_tb where resume_id = #{resumeId} 
     </delete>          
+
+   
 </mapper>

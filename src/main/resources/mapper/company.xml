@@ -41,7 +41,7 @@
     </select> 
 
     <update id="updateCompanyProfile">
-          update company_tb set company_name= #{companyName}, company_password= #{companyPassword}, company_email= #{companyEmail} ,company_profile = #{companyProfile} where id = #{id} 
+          update company_tb set company_profile = #{companyProfile} where id = #{id} 
     </update>
 
 
