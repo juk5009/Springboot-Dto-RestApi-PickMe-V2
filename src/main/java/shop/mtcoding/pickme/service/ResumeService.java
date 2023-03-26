@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeSaveRespDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.model.Resume;
 import shop.mtcoding.pickme.model.ResumeRepository;
@@ -27,7 +28,7 @@ public class ResumeService {
     private final UserskillRepository userskillRepository;
 
     @Transactional
-    public void 이력서작성(ResumeSaveReqDto resumeSaveReqDto, int principalId, String usSkill) {
+    public ResumeSaveRespDto 이력서작성(ResumeSaveReqDto resumeSaveReqDto, int principalId, String usSkill) {
         resumeSaveReqDto.setUserId(principalId);
         Resume resume = new Resume(resumeSaveReqDto);
 
@@ -49,11 +50,25 @@ public class ResumeService {
                 }
             }
         }
+        Resume resumeda = new Resume(resumeSaveReqDto);
+        ResumeSaveRespDto resumesave = new ResumeSaveRespDto();
+        resumesave.setUserId(resumeda.getUserId());
+        resumesave.setResumeUsername(resumeda.getResumeUsername());
+        resumesave.setResumeBirth(resumeda.getResumeBirth());
+        resumesave.setResumeEmail(resumeda.getResumeEmail());
+        resumesave.setResumeAddress(resumeda.getResumeAddress());
+        resumesave.setResumeLocation(resumeda.getResumeLocation());
+        resumesave.setResumeCareer(resumeda.getResumeCareer());
+        resumesave.setResumeGrade(resumeda.getResumeGrade());
+        resumesave.setResumePhoneNumber(resumeda.getResumePhoneNumber());
+        resumesave.setResumeSex(resumeda.getResumeSex());
+        resumesave.setResumeContent(resumeda.getResumeContent());
+        return resumesave;
     }
 
     @Transactional
     public void 이력서삭제(int id, int userPrincipalId) {
-        ResumeUpdateRespDto resumePS = resumeRepository.findById(id);
+        Resume resumePS = resumeRepository.findById(id);
         if (resumePS == null) {
             throw new CustomApiException("없는 공고입니다.");
         }
@@ -69,9 +84,10 @@ public class ResumeService {
     }
 
     @Transactional
-    public void 이력서수정(int id, ResumeUpdateReqDto resumeUpdateReqDto, int userPrincipalId, String usSkill) {
+    public ResumeUpdateRespDto 이력서수정(int id, ResumeUpdateReqDto resumeUpdateReqDto, int userPrincipalId,
+            String usSkill) {
 
-        ResumeUpdateRespDto resumePS = resumeRepository.findById(id);
+        Resume resumePS = resumeRepository.findById(id);
 
         if (resumePS == null) {
             throw new CustomApiException("없는 이력서입니다.");
@@ -108,8 +124,12 @@ public class ResumeService {
                     throw new CustomApiException("보유기술작성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
-
         }
+        resumePS = resumeRepository.findById(id);
+        return new ResumeUpdateRespDto(resumePS.getUserId(), resumePS.getResumeUsername(),
+                resumePS.getResumeBirth(),
+                resumePS.getResumeEmail(), resumePS.getResumeAddress(), resumePS.getResumeLocation(),
+                resumePS.getResumeCareer(), resumePS.getResumeGrade(), resumePS.getResumePhoneNumber(),
+                resumePS.getResumeSex(), resumePS.getResumeContent(), usSkill, usSkill);
     }
-
 }

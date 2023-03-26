@@ -19,6 +19,8 @@ import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.resume.ResumeDetailDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeSaveReqDto;
 import shop.mtcoding.pickme.dto.resume.ResumeReq.ResumeUpdateReqDto;
+import shop.mtcoding.pickme.dto.resume.ResumeRespDto.ResumeUpdateRespDto;
+import shop.mtcoding.pickme.dto.resume.ResumeSaveRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeUpdateDto;
 import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.handler.ex.CustomException;
@@ -40,13 +42,13 @@ public class ResumeController {
     public @ResponseBody ResponseEntity<?> saveResume(@RequestBody @Validation ResumeSaveReqDto resumeSaveReqDto) {
         String usSkill = resumeSaveReqDto.getUserskillList();
 
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // User userPrincipal = (User) session.getAttribute("userPrincipal");
+        // if (userPrincipal == null) {
+        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
 
-        resumeService.이력서작성(resumeSaveReqDto, userPrincipal.getId(), usSkill);
-        return new ResponseEntity<>(new ResponseDto<>(1, "이력서 작성 성공", null), HttpStatus.CREATED);
+        ResumeSaveRespDto resumesave = resumeService.이력서작성(resumeSaveReqDto, 1, usSkill);
+        return new ResponseEntity<>(new ResponseDto<>(1, "이력서 작성 성공", resumesave), HttpStatus.CREATED);
     }
 
     @PutMapping("/resume/{id}")
@@ -54,14 +56,14 @@ public class ResumeController {
             @RequestBody @Validation ResumeUpdateReqDto resumeUpdateReqDto) {
         String usSkill = resumeUpdateReqDto.getUserskillList();
 
-        User userPrincipal = (User) session.getAttribute("userPrincipal");
-        if (userPrincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // User userPrincipal = (User) session.getAttribute("userPrincipal");
+        // if (userPrincipal == null) {
+        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
 
-        resumeService.이력서수정(id, resumeUpdateReqDto, userPrincipal.getId(), usSkill);
+        ResumeUpdateRespDto resumeupdate = resumeService.이력서수정(id, resumeUpdateReqDto, 1, usSkill);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "이력서 수정 완료", null), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1, "이력서 수정 완료", resumeupdate), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/resume/{id}")

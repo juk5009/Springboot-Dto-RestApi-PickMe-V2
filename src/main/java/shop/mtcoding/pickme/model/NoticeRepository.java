@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.pickme.dto.notice.NoticeDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
-import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
+import shop.mtcoding.pickme.dto.notice.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeSelectRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeUpdateDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;

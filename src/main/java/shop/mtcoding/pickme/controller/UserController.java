@@ -21,12 +21,13 @@ import shop.mtcoding.pickme.config.annotation.Validation;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
+import shop.mtcoding.pickme.dto.user.UserJoinRespDto;
 import shop.mtcoding.pickme.dto.user.UserListRespDto;
 import shop.mtcoding.pickme.dto.user.UserMyPageDto;
+import shop.mtcoding.pickme.dto.user.UserMyPageRespDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserJoinReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.pickme.dto.user.UserReq.UserMyPageReqDto;
-import shop.mtcoding.pickme.handler.ex.CustomApiException;
 import shop.mtcoding.pickme.model.CompanyRepository;
 import shop.mtcoding.pickme.model.Companyskill;
 import shop.mtcoding.pickme.model.CompanyskillRepository;
@@ -59,22 +60,22 @@ public class UserController {
     @PutMapping("/user/{id}")
     public @ResponseBody ResponseEntity<?> MyPage(@PathVariable int id,
             @RequestBody @Validation UserMyPageReqDto userMyPageReqDto) {
-        User principal = (User) session.getAttribute("userPrincipal");
-        if (principal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
+        // User principal = (User) session.getAttribute("userPrincipal");
+        // if (principal == null) {
+        // throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
+        // }
 
-        userService.회원정보수정(id, userMyPageReqDto, principal.getId());
+        UserMyPageRespDto usermypage = userService.회원정보수정(id, userMyPageReqDto, 1);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "정보수정완료", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "정보수정완료", usermypage), HttpStatus.OK);
     }
 
     @PostMapping("/userJoin")
-    public @ResponseBody ResponseEntity<?> join(@RequestBody @Validation UserJoinReqDto userJoinReqDto) {
+    public ResponseEntity<ResponseDto<UserJoinRespDto>> join(@RequestBody @Validation UserJoinReqDto userJoinReqDto) {
 
-        userService.회원가입(userJoinReqDto);
+        UserJoinRespDto userjoin = userService.회원가입(userJoinReqDto);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userjoin), HttpStatus.OK);
     }
 
     @GetMapping("/loginForm")
@@ -87,7 +88,7 @@ public class UserController {
 
         User userPrincipal = userService.유저로그인(userLoginReqDto);
         session.setAttribute("userPrincipal", userPrincipal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", userPrincipal), HttpStatus.OK);
     }
 
     /*
