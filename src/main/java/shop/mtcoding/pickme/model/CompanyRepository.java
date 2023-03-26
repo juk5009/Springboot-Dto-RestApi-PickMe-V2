@@ -27,7 +27,8 @@ public interface CompanyRepository {
 
         public Company findById(int id);
 
-        public Optional<Company> findByCompanynameAndPassword(CompanyLoginReqDto CompanyLoginReqDto);
+        public Optional<Company> findByCompanynameAndPassword(@Param("companyName") String companyName,
+                        @Param("companyPassword") String companyPassword);
 
         public int updateCompanyProfile(@Param("id") int id, @Param("companyProfile") String companyProfile);
 

@@ -1,6 +1,7 @@
 package shop.mtcoding.pickme.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.pickme.config.annotation.Validation;
+import shop.mtcoding.pickme.config.auth.JwtProvider;
+import shop.mtcoding.pickme.config.auth.LoginCompany;
 import shop.mtcoding.pickme.dto.ResponseDto;
 import shop.mtcoding.pickme.dto.company.CompanyJoinRespDto;
 import shop.mtcoding.pickme.dto.company.CompanyMypageDto;
@@ -43,47 +44,27 @@ public class CompanyController {
 
     private final CompanyRepository companyRepository;
 
-    @PostMapping("/companyJoin")
+    @PostMapping("/ns/companyJoin")
     public ResponseEntity<ResponseDto<CompanyJoinRespDto>> companyJoin(
             @RequestBody @Validation CompanyJoinReqDto companyJoinReqDto) {
-
         CompanyJoinRespDto companyjoin = companyService.기업회원가입(companyJoinReqDto);
-
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyjoin), HttpStatus.OK);
     }
 
-    // @PostMapping("/companylogin")
-    // public ResponseEntity<?> companylogin(@RequestBody @Validation
-    // CompanyLoginReqDto companyLoginReqDto) {
-
-    // Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
-    // session.setAttribute("comPrincipal", comPrincipal);
-    // return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", comPrincipal),
-    // HttpStatus.OK);
-    // }
-
-    @GetMapping("/companyJoinForm")
-    public ResponseEntity<?> companyJoinForm() {
-        return new ResponseEntity<>(new ResponseDto<>(1, "기업 회원가입 페이지 성공", null), HttpStatus.OK);
+    @PostMapping("/ns/companylogin")
+    public ResponseEntity<?> companylogin(@RequestBody @Validation CompanyLoginReqDto companyLoginReqDto) {
+        Optional<Company> companyOptional = companyRepository.findByCompanynameAndPassword(
+                companyLoginReqDto.getCompanyName(), companyLoginReqDto.getCompanyPassword());
+        if (companyOptional.isPresent()) { // 값이 있다면
+            String jwt = JwtProvider.create(companyOptional.get());
+            return ResponseEntity.ok().header(JwtProvider.HEADER, jwt).body("로그인 성공");
+        } else {
+            return ResponseEntity.badRequest().body("로그인 실패");
+        }
     }
 
     @GetMapping("/company/{id}/companyMyPage")
     public ResponseEntity<?> companyMyPage(@PathVariable int id) {
-        // Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        // if (comprincipal == null) {
-        // throw new CustomException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        // }
-        // Company companyPS = companyRepository.findById(1);
-        // if (companyPS == null) {
-        // throw new CustomException("없는 기업정보를 수정할 수 없습니다");
-        // }
-        // if (companyPS.getId() != comprincipal.getId()) {
-        // throw new CustomException("기업정보를 수정할 권한이 없습니다", HttpStatus.FORBIDDEN);
-        // }
-        // Company companyProfilePS = companyRepository.findById(1);
-        // List<NoticeSelectRespDto> noticeSelectList =
-        // noticeRepository.findAllWithNotice(1);
-
         CompanyMypageDto dto = companyRepository.companyJoinNotice(id);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", dto), HttpStatus.OK);
     }
@@ -91,27 +72,19 @@ public class CompanyController {
     @PutMapping("/company/{id}")
     public @ResponseBody ResponseEntity<?> update(@PathVariable int id,
             @RequestBody @Validation CompanyMypageReqDto companyMypageReqDto) {
-        Company comprincipal = (Company) session.getAttribute("comPrincipal");
-        if (comprincipal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
-        }
-
-        CompanyMypageRespDto companymypage = companyService.기업정보수정(id, companyMypageReqDto, 1);
+        LoginCompany loginCompany = (LoginCompany) session.getAttribute("comPrincipal");
+        CompanyMypageRespDto companymypage = companyService.기업정보수정(id, companyMypageReqDto, loginCompany.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "기업정보수정성공", companymypage), HttpStatus.OK);
     }
 
     // 프로필 업데이트
     @PostMapping("/company/companyProfileUpdate")
     public ResponseEntity<?> companyProfileUpdate(@RequestBody CompanyProfileReqDto companyProfileReqDto) {
-        Company comPrincipal = (Company) session.getAttribute("comPrincipal");
-        if (comPrincipal == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        LoginCompany loginCompany = (LoginCompany) session.getAttribute("comPrincipal");
         if (companyProfileReqDto.getCompanyProfile().isEmpty()) {
             throw new CustomException("사진이 전송되지 않았습니다");
         }
-
-        Company comPS = companyService.회사프로필사진수정(companyProfileReqDto, comPrincipal.getId());
+        Company comPS = companyService.회사프로필사진수정(companyProfileReqDto, loginCompany.getId());
         session.setAttribute("comPrincipal", comPS);
 
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", comPS),
