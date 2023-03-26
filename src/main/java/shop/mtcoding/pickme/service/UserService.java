@@ -39,9 +39,9 @@ public class UserService {
         UserJoinRespDto userjoin = new UserJoinRespDto();
         userjoin.setUserName(user.getUserName());
         ;
-        userjoin.setUserName(user.getUserPassword());
+        userjoin.setUserPassword(user.getUserPassword());
         ;
-        userjoin.setUserName(user.getUserEmail());
+        userjoin.setUserEmail(user.getUserEmail());
         ;
         return userjoin;
     }
