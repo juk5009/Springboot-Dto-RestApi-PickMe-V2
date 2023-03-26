@@ -48,16 +48,6 @@ public class UserService {
     }
 
     @Transactional
-    public User 유저로그인(UserLoginReqDto userLoginReqDto) {
-        User userPrincipal = userRepository.findByUsernameAndPassword(userLoginReqDto.getUserName(),
-                userLoginReqDto.getUserPassword());
-        if (userPrincipal == null) {
-            throw new CustomException("아이디 혹은 패스워드가 잘못 입력되었습니다.");
-        }
-        return userPrincipal;
-    }
-
-    @Transactional
     public UserMyPageRespDto 회원정보수정(int id, UserMyPageReqDto userMyPageReqDto, int principalId) {
         User userPS = userRepository.findById(id);
         if (userPS == null) {

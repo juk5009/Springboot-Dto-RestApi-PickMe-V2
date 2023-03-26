@@ -1,10 +1,10 @@
-INSERT INTO user_tb(user_name, user_password, user_email, user_profile, created_at) values('ssar', '1234', 'ssar@nate.com', '/images/dora.png', now());
-INSERT INTO user_tb(user_name, user_password, user_email, user_profile, created_at) values('bori', '1234', 'bori@nate.com', '/images/dora.png', now());
-INSERT INTO user_tb(user_name, user_password, user_email, user_profile, created_at) values('juho', '1234', 'joho@gmail.com', '/images/dora.png', now());
+INSERT INTO user_tb(user_name, user_password, user_email, user_profile, role, created_at) values('ssar', '1234', 'ssar@nate.com', '/images/dora.png', 'user', now());
+INSERT INTO user_tb(user_name, user_password, user_email, user_profile, role, created_at) values('bori', '1234', 'bori@nate.com', '/images/dora.png', 'user', now());
+INSERT INTO user_tb(user_name, user_password, user_email, user_profile, role, created_at) values('juho', '1234', 'joho@gmail.com', '/images/dora.png', 'user', now());
 
-INSERT INTO company_tb(company_name, company_password, company_email, company_profile, created_at) values('samsung', '1234', 'samsung@gmail.com', '/images/samsung.png', now());
-INSERT INTO company_tb(company_name, company_password, company_email, company_profile, created_at) values('lg', '1234', 'lg@gmail.com', '/images/lg.png', now());
-INSERT INTO company_tb(company_name, company_password, company_email, company_profile, created_at) values('green', '1234', 'green@gmail.com', '/images/samsung.png', now());
+INSERT INTO company_tb(company_name, company_password, company_email, company_profile, role, created_at) values('samsung', '1234', 'samsung@gmail.com', '/images/samsung.png', 'company', now());
+INSERT INTO company_tb(company_name, company_password, company_email, company_profile, role, created_at) values('lg', '1234', 'lg@gmail.com', '/images/lg.png', 'company', now());
+INSERT INTO company_tb(company_name, company_password, company_email, company_profile, role, created_at) values('green', '1234', 'green@gmail.com', '/images/samsung.png','company', now());
 
 INSERT INTO notice_tb(company_id, notice_companyname, notice_title, notice_employtype, notice_location, notice_career, notice_grade, notice_pay, notice_content, created_at) values('1', '삼성', '자바 기술자 모집합니다.', '정규직', '부산', '경력 2년이상', '초대졸이상', '5000', '자바 기술자를 뽑지만 스프링도 할줄 알아야 하고, 리액트도 할줄 아셔야 합니다.', now());
 INSERT INTO notice_tb(company_id, notice_companyname, notice_title, notice_employtype, notice_location, notice_career, notice_grade, notice_pay, notice_content, created_at) values('1', '삼성', '스프링 기술자 모집합니다.', '정규직',  '서울', '경력 5년이상', '대졸이상', '1000', '스프링 기술자를 뽑지만 리액트도 할줄 알아야 하고, 플러터도 할줄 아셔야 합니다.', now());

@@ -13,5 +13,6 @@ public class User {
     private String userPassword;
     private String userEmail;
     private String userProfile;
+    private String role;
     private Timestamp createdAt;
 }

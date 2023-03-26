@@ -52,13 +52,15 @@ public class CompanyController {
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyjoin), HttpStatus.OK);
     }
 
-    @PostMapping("/companylogin")
-    public ResponseEntity<?> companylogin(@RequestBody @Validation CompanyLoginReqDto companyLoginReqDto) {
+    // @PostMapping("/companylogin")
+    // public ResponseEntity<?> companylogin(@RequestBody @Validation
+    // CompanyLoginReqDto companyLoginReqDto) {
 
-        Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
-        session.setAttribute("comPrincipal", comPrincipal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", comPrincipal), HttpStatus.OK);
-    }
+    // Company comPrincipal = companyService.기업로그인(companyLoginReqDto);
+    // session.setAttribute("comPrincipal", comPrincipal);
+    // return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", comPrincipal),
+    // HttpStatus.OK);
+    // }
 
     @GetMapping("/companyJoinForm")
     public ResponseEntity<?> companyJoinForm() {

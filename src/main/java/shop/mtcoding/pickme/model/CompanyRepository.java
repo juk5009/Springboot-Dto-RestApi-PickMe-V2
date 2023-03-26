@@ -1,6 +1,7 @@
 package shop.mtcoding.pickme.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +27,7 @@ public interface CompanyRepository {
 
         public Company findById(int id);
 
-        public Company findByCompanynameAndPassword(CompanyLoginReqDto CompanyLoginReqDto);
+        public Optional<Company> findByCompanynameAndPassword(CompanyLoginReqDto CompanyLoginReqDto);
 
         public int updateCompanyProfile(@Param("id") int id, @Param("companyProfile") String companyProfile);
 
