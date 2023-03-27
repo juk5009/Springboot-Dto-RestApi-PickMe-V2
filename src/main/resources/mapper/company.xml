@@ -25,7 +25,7 @@
     </select>   
 
     <insert id="insert">
-        insert into company_tb (company_name, company_password, company_email, created_at) values(#{companyName}, #{companyPassword}, #{companyEmail}, now())
+        insert into company_tb (company_name, company_password, company_email, role, created_at) values(#{companyName}, #{companyPassword}, #{companyEmail}, #{role}, now())
     </insert>
 
     <delete id="deleteById" >

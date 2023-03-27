@@ -127,7 +127,7 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeMainList), HttpStatus.OK);
     }
 
-    @GetMapping("/user/userList")
+    @GetMapping("/ns/user/userList")
     public ResponseEntity<?> userList() {
         List<UserListRespDto> userList = userRepository.findUserList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userList), HttpStatus.OK);

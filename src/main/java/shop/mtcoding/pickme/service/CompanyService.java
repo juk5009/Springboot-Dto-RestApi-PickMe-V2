@@ -40,6 +40,7 @@ public class CompanyService {
         companyjoin.setCompanyName(company.getCompanyName());
         companyjoin.setCompanyPassword(company.getCompanyPassword());
         companyjoin.setCompanyEmail(company.getCompanyEmail());
+        companyjoin.setRole(company.getRole());
         return companyjoin;
     }
 

@@ -39,11 +39,11 @@ public class UserService {
         User user = userRepository.findByUsername(userJoinReqDto.getUserName());
         UserJoinRespDto userjoin = new UserJoinRespDto();
         userjoin.setUserName(user.getUserName());
-        ;
+
         userjoin.setUserPassword(user.getUserPassword());
-        ;
+
         userjoin.setUserEmail(user.getUserEmail());
-        ;
+        userjoin.setRole(user.getRole());
         return userjoin;
     }
 
