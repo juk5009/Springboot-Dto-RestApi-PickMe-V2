@@ -12,4 +12,5 @@ public class CompanyJoinRespDto {
     @JsonIgnore
     private String companyPassword;
     private String companyEmail;
+    private String role;
 }

@@ -16,6 +16,8 @@ public class UserReq {
         private String userPassword;
         @NotEmpty(message = "이메일을 입력해주세요.")
         private String userEmail;
+        @NotEmpty(message = "role을 입력해주세요.")
+        private String role;
     }
 
     @Getter

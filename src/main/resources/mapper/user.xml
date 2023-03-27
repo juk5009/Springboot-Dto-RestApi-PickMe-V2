@@ -59,7 +59,7 @@
     </select>   
 
     <insert id="insert">
-        insert into user_tb (user_name, user_password, user_email, created_at) values(#{userName}, #{userPassword}, #{userEmail}, now())
+        insert into user_tb (user_name, user_password, user_email, role, created_at) values(#{userName}, #{userPassword}, #{userEmail}, #{role}, now())
     </insert>
 
     <delete id="deleteById" >
