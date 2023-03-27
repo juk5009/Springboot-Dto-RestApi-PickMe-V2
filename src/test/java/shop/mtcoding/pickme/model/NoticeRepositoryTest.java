@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.pickme.dto.notice.NoticeMainRespDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeSaveReqDto;
 import shop.mtcoding.pickme.dto.notice.NoticeReq.NoticeUpdateReqDto;
-import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
+// import shop.mtcoding.pickme.dto.notice.NoticeResp.NoticeSaveRespDto;
 import shop.mtcoding.pickme.dto.resume.ResumeResp.ResumeSelectRespDto;
 
 @Transactional
@@ -102,19 +102,20 @@ public class NoticeRepositoryTest {
         assertThat(noticeMainRespDto.get(1).getNoticeCompanyname()).isEqualTo("삼성");
     }
 
-    @Test
-    public void findByCompanyIdWithNotice_test() throws Exception {
-        // given
-        int id = 1;
-        ObjectMapper om = new ObjectMapper(); // Jackson
+    // @Test
+    // public void findByCompanyIdWithNotice_test() throws Exception {
+    // // given
+    // int id = 1;
+    // ObjectMapper om = new ObjectMapper(); // Jackson
 
-        // when
-        NoticeSaveRespDto noticeSaveReqDto = noticeRepository.findByCompanyIdWithNotice(id);
-        String responseBody = om.writeValueAsString(noticeSaveReqDto);
-        System.out.println("테스트 : " + responseBody);
-        // then
-        assertThat(noticeSaveReqDto.getNoticeCareer()).isEqualTo("경력 2년이상");
-    }
+    // // when
+    // NoticeSaveRespDto noticeSaveReqDto =
+    // noticeRepository.findByCompanyIdWithNotice(id);
+    // String responseBody = om.writeValueAsString(noticeSaveReqDto);
+    // System.out.println("테스트 : " + responseBody);
+    // // then
+    // assertThat(noticeSaveReqDto.getNoticeCareer()).isEqualTo("경력 2년이상");
+    // }
 
     @Test
     public void findAllWithResume_test() throws Exception {

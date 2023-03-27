@@ -68,13 +68,13 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "정보수정완료", usermypage), HttpStatus.OK);
     }
 
-    @PostMapping("/ns/userJoin")
+    @PostMapping("/nc/userJoin")
     public ResponseEntity<ResponseDto<UserJoinRespDto>> join(@RequestBody @Validation UserJoinReqDto userJoinReqDto) {
         UserJoinRespDto userjoin = userService.회원가입(userJoinReqDto);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userjoin), HttpStatus.OK);
     }
 
-    @PostMapping("/ns/userlogin")
+    @PostMapping("/nc/userlogin")
     public ResponseEntity<?> userlogin(@RequestBody @Validation UserLoginReqDto userLoginReqDto, HttpSession session) {
         Optional<User> userOptional = userRepository.findByUsernameAndPassword(
                 userLoginReqDto.getUserName(), userLoginReqDto.getUserPassword());
@@ -121,13 +121,13 @@ public class UserController {
         return new ResponseEntity<>(userSkillMatch, HttpStatus.OK);
     }
 
-    @GetMapping("/ns/main")
+    @GetMapping("/nc/main")
     public ResponseEntity<?> main() {
         List<NoticeMainRespDto> noticeMainList = noticeRepository.findMainList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", noticeMainList), HttpStatus.OK);
     }
 
-    @GetMapping("/ns/user/userList")
+    @GetMapping("/nc/user/userList")
     public ResponseEntity<?> userList() {
         List<UserListRespDto> userList = userRepository.findUserList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", userList), HttpStatus.OK);
