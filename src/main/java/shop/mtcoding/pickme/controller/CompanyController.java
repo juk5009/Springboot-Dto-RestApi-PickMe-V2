@@ -44,14 +44,14 @@ public class CompanyController {
 
     private final CompanyRepository companyRepository;
 
-    @PostMapping("/ns/companyJoin")
+    @PostMapping("/nc/companyJoin")
     public ResponseEntity<ResponseDto<CompanyJoinRespDto>> companyJoin(
             @RequestBody @Validation CompanyJoinReqDto companyJoinReqDto) {
         CompanyJoinRespDto companyjoin = companyService.기업회원가입(companyJoinReqDto);
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", companyjoin), HttpStatus.OK);
     }
 
-    @PostMapping("/ns/companylogin")
+    @PostMapping("/nc/companylogin")
     public ResponseEntity<?> companylogin(@RequestBody @Validation CompanyLoginReqDto companyLoginReqDto) {
         Optional<Company> companyOptional = companyRepository.findByCompanynameAndPassword(
                 companyLoginReqDto.getCompanyName(), companyLoginReqDto.getCompanyPassword());
@@ -91,7 +91,7 @@ public class CompanyController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/company/companyList")
+    @GetMapping("/nc/company/companyList")
     public ResponseEntity<?> companyList(CompanyListRespDto companyListRespDto) {
         List<CompanyListRespDto> companyList = companyRepository.findCompanyList();
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", companyList), HttpStatus.OK);

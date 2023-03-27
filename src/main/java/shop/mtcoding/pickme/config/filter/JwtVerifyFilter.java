@@ -28,7 +28,7 @@ public class JwtVerifyFilter implements Filter {
 
         // 요청 URL 가져오기
         String requestUri = req.getRequestURI();
-        if (!requestUri.startsWith("/ns/")) {
+        if (!requestUri.startsWith("/nc/")) {
             String prefixJwt = req.getHeader(JwtProvider.HEADER);
             String jwt = prefixJwt.replace(JwtProvider.TOKEN_PREFIX, "");
             try {

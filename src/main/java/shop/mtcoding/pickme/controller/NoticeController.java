@@ -68,7 +68,7 @@ public class NoticeController {
 
     }
 
-    @GetMapping("/ns/notice/{id}")
+    @GetMapping("/nc/notice/{id}")
     public ResponseEntity<?> noticeDetailForm(@PathVariable int id) {
         List<ResumeSelectRespDto> resumeSelectList = noticeRepository.findAllWithResume();
         NoticeDto noticeDto = noticeRepository.noticeJoinCompanySkill(id);
