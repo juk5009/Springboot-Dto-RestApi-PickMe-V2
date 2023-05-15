@@ -1,7 +1,8 @@
 # Team 프로젝트 2
 
 # 시연영상
-https://youtu.be/v-q8bsk94Ak
+
+https://youtu.be/OfuE4jgBogc
 
 # PPT 
 [4조_미니프로젝트2_PPT.pdf](https://github.com/juk5009/Springboot-Dto-RestApi-PickMe-V2/files/11341065/4._.2_PPT.pdf)
