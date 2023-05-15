@@ -1,4 +1,6 @@
-# Team 프로젝트 2
+# Pick Me !! 프로젝트 (REST API server)
+
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/62aac9e1-a43e-4638-8760-ee516c1507b1)
 
 # 시연영상
 
@@ -7,122 +9,91 @@ https://youtu.be/OfuE4jgBogc
 # PPT 
 [4조_미니프로젝트2_PPT.pdf](https://github.com/juk5009/Springboot-Dto-RestApi-PickMe-V2/files/11341065/4._.2_PPT.pdf)
 
+## 팀원 소개
 
-## 기술스택
-- JDK 11
-- Springboot 2.7.9
-- MyBatis
-- 테스트 h2 디비
-- 프로덕션 MySQL 디비
 
-## Dto 변환
+|                                                 김정욱(팀장)                                                  |                                                 안정훈                                                  |
+| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | 
+| <img src="https://avatars.githubusercontent.com/u/122331826?v=4" alt="profile" width="100" height="100"> | [<img src="https://avatars.githubusercontent.com/u/122362662?v=4" alt="profile" width="100" height="100">](https://avatars.githubusercontent.com/u/122331826?v=4) | 
+|                                   [@juk5009](https://github.com/juk5009)                                   |                                 [@aj124578](https://github.com/aj124578)                                 |
+
+<br>
+
+
+
+|                                                 임원빈                                                  |                                                 이현석                                                  |
+| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | 
+| <img src="https://avatars.githubusercontent.com/u/122371902?v=4" alt="profile" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/122357103?v=4" alt="profile" width="100" height="100"> | 
+|                                   [@wonbin3366](https://github.com/wonbin3366)                               |                                 [@hyunseok-s](https://github.com/hyunseok9037)                                 |
+
+<br>
+
+### 개발 툴<br>
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/2a81747e-306b-43e3-9fa1-9adebb8b91d6)
+ <br>
+### 사용 언어<br>
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/272a1dca-de7f-4e0d-85e2-7713799e7790)
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/df52daad-57a2-41ca-a0ef-4629b89c6dc0)
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/922ff227-a09f-45c4-a3af-c5c0285b3384)<br> 
+
+### DB<br>
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/a439e899-0ceb-44b5-9f88-2f648a31128f)
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/546e397b-2d5a-4f70-b3f4-d6a46e1f8d7d) <br>
+
+### 프레임워크<br>
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/11426330-7c5f-4fd1-b0f4-16f30896867d) <br> 
+
+### 사용 기술<br>
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/6e34af19-ad91-433b-a274-049f29574bb0)
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/2ed02e21-d3c5-4f37-a929-92b059a21b55)
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/dd60862c-fa66-4dcd-b035-4be6f7507544)
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/a3c4701a-7f1d-4934-ab84-3be71c18089e)<br>
+
+### 협업 툴<br>
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/4da6dc79-8bda-4c09-af7d-ab38e7179191)
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/44f52fdb-b6db-45cc-a58d-4b35289db93c)
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/7fa02c32-4862-4391-97a9-b446b52f7150)
+![image](https://github.com/clean17/Village-Front-Project/assets/118657689/30dccaf8-feff-459c-bb32-c7e857141b6b)<br>
+
+## 기능정리
 ### 1단계
-Model을 ResponseEntity 응답
-ResponseEntity ORM
+- Model을 ResponseEntity 응답<br>
+ResponseEntity ORM<br>
 JSON으로 통일
 
 ### 2단계
-image base64로 변환
+- image base64로 변환
+- JWT 
 
 ### 3단계
-JWT 
-Filter
-AOP(유효성검사)
-
-
+- Filter
+- AOP(유효성검사)
 
 ## 아키텍처
 
-![image](https://user-images.githubusercontent.com/122331826/232224926-c62dcf67-b7fa-4b44-aac7-68d7d574c06f.png)
-
-
-![image](https://user-images.githubusercontent.com/122331826/232224900-bdb89125-22cc-48c8-914d-b1e32d8c4841.png)
-
-
-## 개인
-
-![image](https://user-images.githubusercontent.com/122331826/232224596-a2bc8b53-2f26-46d1-8f88-b5121df8c5ae.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224639-917e45e7-1dc3-4519-89e7-a85e9a034bac.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224658-6e657b43-91a6-4556-8a5c-535df4c39b55.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224680-65e4a94f-b71f-431d-b792-b1d4195529ea.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224688-a8c2cd65-9ed6-42ce-99e6-926700789c6a.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224699-7c6ee9bd-dfd1-44e6-ad8d-7a095c62b9a6.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224734-87469513-d7e3-4ddd-88b3-783c841d1d8c.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224748-4970fe62-078b-4432-a4f7-780f9287fda8.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224764-60e56850-4140-4055-a12e-7aa4a117afd4.png)
-
-## 기업
-
-![image](https://user-images.githubusercontent.com/122331826/232224783-bd55a49f-5bba-46d2-a78a-5a3635511d7e.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224790-6079c7d8-3b17-4f7e-9060-6cd07d5073fd.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224800-462f5f09-522e-41c5-8391-578505a4da1c.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224808-f5dcd65f-d5b2-4c65-9733-db0755e8bede.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224820-9aaf33ff-b22d-45d5-875d-12b07cccfb28.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224823-e82c1a0d-3f9d-45fe-9c79-1204385b77b3.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232224834-efd58f06-075e-458f-b09b-98b8b82d4904.png)
-
-
-## DTO 변환
-
-![image](https://user-images.githubusercontent.com/122331826/232225184-b9e539ad-cf47-444e-bc81-91f599ea7d78.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225238-15aacfa6-4408-4114-95e7-a69e99128798.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225255-59712049-54fc-4e85-a6f4-42650092f730.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225261-d81d586d-3694-4753-b5da-6a526b80da0d.png)
-
-## BASE64
-
-![image](https://user-images.githubusercontent.com/122331826/232225278-c8cdc566-35ea-40b7-93c7-ce5629522caa.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225285-f02cb746-6342-477a-8fdd-8a36f15c73dd.png)
-
-
-## JWT
-
-![image](https://user-images.githubusercontent.com/122331826/232225373-9cc0e668-e3b4-4f96-bc01-77dc5a47e831.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225378-4815c844-fa4b-4b6e-a8eb-165575c3b550.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225396-d4dce456-ffe1-44ba-a499-8b123549630a.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225405-dd9e4ec0-82f5-4f50-b8b5-5bb8a407b9ea.png)
-
-## AOP
-
-![image](https://user-images.githubusercontent.com/122331826/232225418-85ae8f8c-d7a9-4da9-9b28-861dfc474028.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225427-ff00c524-5f96-43b1-9419-f995caf70070.png)
-
-
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/69036f18-0821-48ae-aaa8-93d76172387b)
 
 ## API 문서 예시
 
-![image](https://user-images.githubusercontent.com/122331826/232225312-8b821f74-6517-43f5-bdad-07b9ad543119.png)
+![image](https://github.com/juk5009/Springboot-Dto-RestApi-PickMe-V2/assets/122331826/7f6b9a23-e396-4dc0-b932-70ca68cf452a)
 
-![image](https://user-images.githubusercontent.com/122331826/232225335-8e078b5c-4eca-4343-b11d-ddcbe0906a80.png)
-
-![image](https://user-images.githubusercontent.com/122331826/232225352-02977c4e-01d4-4aad-9fe0-2146c0b38f1f.png)
 
 
 ## Junit 통합 테스트
+![image](https://github.com/juk5009/Springboot-MyBatis-Jsp-PickMe/assets/122331826/aedb14c0-63fe-4410-aca5-d2c1ef2b731b)
 
-![image](https://user-images.githubusercontent.com/122331826/232224851-3c89dd6e-3d7f-480e-9ef3-cd9c8e5e85a7.png)
+## 느낀점
 
-![image](https://user-images.githubusercontent.com/122331826/232225451-f622cb25-7698-4d8e-a952-98676c76cc45.png)
+- 김정욱<br><br>
+처음 프로젝트 할 때보다는 심적으로 마음이 편하였고, 협업에 관해서 조금 더 효율적으로 할 수 있는 방법에 대해 고민하였고 나아졌다고 생각합니다. 앞으로 더 노력하겠습니다. <br>
+
+- 안정훈<br><br>
+처음 설계에서 잘 만들어놓으면 DTO 변환도 편하다는걸 알게되었습니다 고생한 팀원들에게 감사합니다<br>
+
+- 임원빈<br><br>
+2차 프로젝트는 쉬어가는 과정이라고 했지만 나름 많은 개념들을 얻어가는 것 같다 고생 했어욤 ~ <br>
+
+- 이현석<br><br>
+2차 프로젝트를 마치며 더 많은 걸 배울 수 있는 개기가 되었고 더 성장 할 수 있겟다고 생각이 들었습니다 모두 고생 많으셨습니다. <br>
+
 
